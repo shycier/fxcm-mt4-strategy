@@ -1,0 +1,62 @@
+# MQL4 Compiled Files
+*.ex4
+*.ex5
+
+# Object Files
+*.obj
+*.o
+
+# Debug Files
+*.pdb
+*.ilk
+
+# Log Files
+*.log
+logs/
+
+# MT4 Terminal Files
+*.fxt
+*.hst
+history/
+tester/history/
+tester/cache/
+
+# Backup Files
+*.bak
+*.backup
+*~
+
+# IDE/Editor Files
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Build Artifacts
+build/
+bin/
+obj/
+
+# Dependencies
+node_modules/
+
+# Environment Files
+.env
+.env.local
+.env.*.local
+
+# Temporary Files
+*.tmp
+*.temp
+temp/
+tmp/
+
+# Test Results
+test-results/
+coverage/
+
+# Personal Configuration
+personal/
+private/

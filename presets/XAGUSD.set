@@ -1,0 +1,77 @@
+;+------------------------------------------------------------------+
+;|                                         XAGUSD.set               |
+;|                                    白银参数预设                    |
+;|                                    TimeFrame: H4                  |
+;+------------------------------------------------------------------+
+
+[General]
+Symbol=XAGUSD
+TimeFrame=240
+
+[Risk]
+; 白银波动极大,使用最保守的风险
+RiskPercent=0.8
+MaxDailyLoss=3.0
+MaxWeeklyLoss=6.0
+MaxDrawdown=10.0
+MaxDailyTrades=2
+MaxPositions=1
+
+[TrendMA]
+; MA交叉策略参数 - 使用大周期过滤噪音
+MA_FastPeriod=20
+MA_SlowPeriod=40
+MA_Method=0
+MA_SL_Pips=80
+MA_TP_Pips=160
+MA_UseTrailing=true
+MA_TrailPips=40
+
+[TrendMACD]
+; MACD策略参数
+MACD_Fast=12
+MACD_Slow=26
+MACD_Signal=9
+MACD_SL_Pips=100
+MACD_TP_Pips=200
+
+[RSI]
+; RSI均值回归参数
+RSI_Period=14
+RSI_Overbought=75
+RSI_Oversold=25
+RSI_SL_Pips=60
+RSI_TP_Pips=120
+
+[Bollinger]
+; 布林带参数 - 白银波动极大
+BB_Period=20
+BB_Deviation=3.0
+BB_SL_Pips=50
+BB_TP_Pips=100
+
+[Breakout]
+; 突破策略参数
+CB_ChannelPeriod=30
+CB_EntryOffset=10
+CB_SL_Pips=70
+CB_TP_Pips=140
+
+[Scalping]
+; 剥头皮参数 - 不推荐用于白银
+QS_FastMA=5
+QS_SlowMA=13
+QS_RSI_Period=7
+QS_SL_Pips=25
+QS_TP_Pips=40
+QS_MaxSpread=4
+
+[Trading]
+; 交易时段 (GMT)
+; 欧美时段最佳
+TradeStartHour=13
+TradeEndHour=20
+AvoidNews=true
+; 白银波动剧烈,建议仅在明确趋势时交易
+
+;+------------------------------------------------------------------+

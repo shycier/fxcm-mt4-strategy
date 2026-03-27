@@ -1,0 +1,75 @@
+;+------------------------------------------------------------------+
+;|                                         EURUSD.set               |
+;|                                    欧美参数预设                    |
+;|                                    TimeFrame: H1                  |
+;+------------------------------------------------------------------+
+
+[General]
+Symbol=EURUSD
+TimeFrame=60
+
+[Risk]
+RiskPercent=1.5
+MaxDailyLoss=5.0
+MaxWeeklyLoss=10.0
+MaxDrawdown=15.0
+MaxDailyTrades=5
+MaxPositions=2
+
+[TrendMA]
+; MA交叉策略参数
+MA_FastPeriod=10
+MA_SlowPeriod=20
+MA_Method=0
+MA_SL_Pips=30
+MA_TP_Pips=60
+MA_UseTrailing=true
+MA_TrailPips=20
+
+[TrendMACD]
+; MACD策略参数
+MACD_Fast=12
+MACD_Slow=26
+MACD_Signal=9
+MACD_SL_Pips=40
+MACD_TP_Pips=80
+
+[RSI]
+; RSI均值回归参数
+RSI_Period=14
+RSI_Overbought=70
+RSI_Oversold=30
+RSI_SL_Pips=25
+RSI_TP_Pips=50
+
+[Bollinger]
+; 布林带参数
+BB_Period=20
+BB_Deviation=2.0
+BB_SL_Pips=20
+BB_TP_Pips=40
+
+[Breakout]
+; 突破策略参数
+CB_ChannelPeriod=20
+CB_EntryOffset=0
+CB_SL_Pips=30
+CB_TP_Pips=60
+
+[Scalping]
+; 剥头皮参数
+QS_FastMA=5
+QS_SlowMA=13
+QS_RSI_Period=7
+QS_SL_Pips=10
+QS_TP_Pips=15
+QS_MaxSpread=2
+
+[Trading]
+; 交易时段 (GMT)
+; 欧美时段最佳
+TradeStartHour=8
+TradeEndHour=20
+AvoidNews=true
+
+;+------------------------------------------------------------------+

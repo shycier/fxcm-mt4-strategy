@@ -1,0 +1,77 @@
+;+------------------------------------------------------------------+
+;|                                         XAUUSD.set               |
+;|                                    黄金参数预设                    |
+;|                                    TimeFrame: H4                  |
+;+------------------------------------------------------------------+
+
+[General]
+Symbol=XAUUSD
+TimeFrame=240
+
+[Risk]
+; 黄金波动大,使用更保守的风险
+RiskPercent=1.0
+MaxDailyLoss=4.0
+MaxWeeklyLoss=8.0
+MaxDrawdown=12.0
+MaxDailyTrades=3
+MaxPositions=1
+
+[TrendMA]
+; MA交叉策略参数 - 使用较大周期
+MA_FastPeriod=15
+MA_SlowPeriod=30
+MA_Method=0
+MA_SL_Pips=100
+MA_TP_Pips=200
+MA_UseTrailing=true
+MA_TrailPips=50
+
+[TrendMACD]
+; MACD策略参数
+MACD_Fast=12
+MACD_Slow=26
+MACD_Signal=9
+MACD_SL_Pips=120
+MACD_TP_Pips=240
+
+[RSI]
+; RSI均值回归参数
+RSI_Period=14
+RSI_Overbought=75
+RSI_Oversold=25
+RSI_SL_Pips=80
+RSI_TP_Pips=160
+
+[Bollinger]
+; 布林带参数 - 黄金波动大,使用较宽布林带
+BB_Period=20
+BB_Deviation=2.5
+BB_SL_Pips=60
+BB_TP_Pips=120
+
+[Breakout]
+; 突破策略参数
+CB_ChannelPeriod=30
+CB_EntryOffset=10
+CB_SL_Pips=80
+CB_TP_Pips=160
+
+[Scalping]
+; 剥头皮参数 - 黄金不适合剥头皮,仅供参考
+QS_FastMA=5
+QS_SlowMA=13
+QS_RSI_Period=7
+QS_SL_Pips=30
+QS_TP_Pips=50
+QS_MaxSpread=5
+
+[Trading]
+; 交易时段 (GMT)
+; 欧美时段最佳
+TradeStartHour=13
+TradeEndHour=20
+AvoidNews=true
+; 避免非农等重大数据
+
+;+------------------------------------------------------------------+

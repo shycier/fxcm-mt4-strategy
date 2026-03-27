@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__web-search-prime__web_search_prime",
+      "mcp__web-reader__webReader",
+      "mcp__zread__get_repo_structure",
+      "Bash(git init)",
+      "Bash(git add .gitignore README.md .claude/claude.md)",
+      "Bash(git add core/.gitkeep experts/.gitkeep include/.gitkeep indicators/.gitkeep presets/.gitkeep risk/.gitkeep tests/.gitkeep utils/.gitkeep strategies/Trend/.gitkeep strategies/MeanReversion/.gitkeep strategies/Breakout/.gitkeep strategies/Scalping/.gitkeep)",
+      "Bash(git commit:*)",
+      "Bash(git add core/ include/ risk/ strategies/ utils/ experts/ presets/)",
+      "Bash(git remote add origin https://github.com/shycier/fxcm-mt4-strategy.git)",
+      "Bash(git push -u origin main)",
+      "Bash(git remote set-url origin https://shycier:z199106140558@github.com/shycier/fxcm-mt4-strategy.git)",
+      "Bash(git remote set-url origin https://shycier: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@github.com/shycier/fxcm-mt4-strategy.git)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" https://github.com/shycier/fxcm-mt4-strategy)",
+      "Bash(git remote set-url origin https://shycier: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@github.com/shycier/fxcm-mt4-strategy.git)"
+    ]
+  }
+}

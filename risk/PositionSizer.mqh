@@ -87,7 +87,7 @@ void CPositionSizer::SetMinMaxLots(double minLot, double maxLot)
 }
 
 //+------------------------------------------------------------------+
-//| 获取点值                                                           |
+//| 获取点值 (1个点变动对应的盈亏)                                      |
 //+------------------------------------------------------------------+
 double CPositionSizer::GetPipValue(const string symbol)
 {
@@ -100,13 +100,26 @@ double CPositionSizer::GetPipValue(const string symbol)
 
    double pipValue = 0;
 
-   if(tickSize > 0 && point > 0)
+   if(tickSize > 0 && point > 0 && tickValue > 0)
    {
+      // 计算1个point对应的美元价值
+      // tickValue是tickSize变动时的盈亏，所以1个point的盈亏 = tickValue * (point / tickSize)
       pipValue = tickValue * (point / tickSize);
 
-      // 5位或3位小数的品种
+      // 对于5位小数(多数货币对)或3位小数(日元对)，1 pip = 10 points
       if(digits == 5 || digits == 3)
          pipValue *= 10;
+   }
+   else
+   {
+      // 如果MarketInfo返回0，使用默认值
+      // 根据品种类型设置默认pipValue
+      if(StringFind(sym, "XAU") >= 0 || StringFind(sym, "GOLD") >= 0)
+         pipValue = 1.0;  // 黄金：1 pip = 1 USD (100盎司 * 0.01)
+      else if(StringFind(sym, "XAG") >= 0 || StringFind(sym, "SILVER") >= 0)
+         pipValue = 0.5;  // 白银：1 pip = 0.5 USD (5000盎司 * 0.01 / 100)
+      else
+         pipValue = 10.0; // 外汇默认：1 pip = 10 USD (100000 * 0.0001)
    }
 
    return pipValue;

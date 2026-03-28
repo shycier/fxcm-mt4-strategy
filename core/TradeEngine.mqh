@@ -350,8 +350,12 @@ void CTradeEngine::ProcessSignal(int signal, double sl, double tp)
 
    //--- 计算仓位大小
    double riskPercent = m_riskParams.riskPercent;
-   double slPips = MathAbs(Bid - sl) / Point;
-   if(signal == SIGNAL_SELL) slPips = MathAbs(Ask - sl) / Point;
+
+   //--- 计算止损点数（统一为pips，第4位小数）
+   int digits = (int)MarketInfo(m_symbol, MODE_DIGITS);
+   double pipMultiplier = (digits == 5 || digits == 3) ? 10 : 1; // 5位/3位小数需要除以10
+   double slPips = MathAbs(Bid - sl) / Point / pipMultiplier;
+   if(signal == SIGNAL_SELL) slPips = MathAbs(Ask - sl) / Point / pipMultiplier;
 
    double lots = m_positionSizer.CalculateLotSize(riskPercent, slPips, m_symbol);
 

@@ -3,7 +3,9 @@
 //|                                    Copyright 2024, FXCM Trader   |
 //|                                       https://www.fxcm.com       |
 //+------------------------------------------------------------------+
-#pragma once
+#ifndef __DrawdownProtector_MQH__
+#define __DrawdownProtector_MQH__
+
 
 #include "../include/Constants.mqh"
 #include "../include/Types.mqh"
@@ -325,3 +327,4 @@ void CDrawdownProtector::ResumeTrading()
 }
 
 //+------------------------------------------------------------------+
+#endif // __DrawdownProtector_MQH__

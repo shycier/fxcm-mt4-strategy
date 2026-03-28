@@ -3,7 +3,9 @@
 //|                                    Copyright 2024, FXCM Trader   |
 //|                                       https://www.fxcm.com       |
 //+------------------------------------------------------------------+
-#pragma once
+#ifndef __TradeEngine_MQH__
+#define __TradeEngine_MQH__
+
 
 #include "../include/Constants.mqh"
 #include "../include/Types.mqh"
@@ -506,3 +508,4 @@ bool CTradeEngine::IsTradingAllowed()
 }
 
 //+------------------------------------------------------------------+
+#endif // __TradeEngine_MQH__

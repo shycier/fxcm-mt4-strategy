@@ -3,7 +3,9 @@
 //|                                    Copyright 2024, FXCM Trader   |
 //|                                       https://www.fxcm.com       |
 //+------------------------------------------------------------------+
-#pragma once
+#ifndef __PriceUtils_MQH__
+#define __PriceUtils_MQH__
+
 
 #include "../include/Constants.mqh"
 
@@ -292,3 +294,4 @@ double FindResistanceLevel(const string& symbol, int lookback = 20, int timeFram
 }
 
 //+------------------------------------------------------------------+
+#endif // __PriceUtils_MQH__

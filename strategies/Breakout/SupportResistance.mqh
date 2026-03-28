@@ -3,7 +3,9 @@
 //|                                    Copyright 2024, FXCM Trader   |
 //|                                       https://www.fxcm.com       |
 //+------------------------------------------------------------------+
-#pragma once
+#ifndef __SupportResistance_MQH__
+#define __SupportResistance_MQH__
+
 
 #include "../../core/SignalGenerator.mqh"
 #include "../../utils/MathUtils.mqh"
@@ -219,3 +221,4 @@ int CSupportResistance::GenerateSignal(double& sl, double& tp)
 }
 
 //+------------------------------------------------------------------+
+#endif // __SupportResistance_MQH__

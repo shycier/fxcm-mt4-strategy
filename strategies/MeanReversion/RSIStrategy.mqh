@@ -3,7 +3,9 @@
 //|                                    Copyright 2024, FXCM Trader   |
 //|                                       https://www.fxcm.com       |
 //+------------------------------------------------------------------+
-#pragma once
+#ifndef __RSIStrategy_MQH__
+#define __RSIStrategy_MQH__
+
 
 #include "../../core/SignalGenerator.mqh"
 #include "../../utils/MathUtils.mqh"
@@ -186,3 +188,4 @@ int CRSIStrategy::GenerateSignal(double& sl, double& tp)
 }
 
 //+------------------------------------------------------------------+
+#endif // __RSIStrategy_MQH__

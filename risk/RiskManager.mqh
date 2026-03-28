@@ -3,7 +3,9 @@
 //|                                    Copyright 2024, FXCM Trader   |
 //|                                       https://www.fxcm.com       |
 //+------------------------------------------------------------------+
-#pragma once
+#ifndef __RiskManager_MQH__
+#define __RiskManager_MQH__
+
 
 #include "../include/Constants.mqh"
 #include "../include/Types.mqh"
@@ -377,3 +379,4 @@ void CRiskManager::ResetAll()
 }
 
 //+------------------------------------------------------------------+
+#endif // __RiskManager_MQH__

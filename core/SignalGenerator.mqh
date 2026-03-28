@@ -3,7 +3,9 @@
 //|                                    Copyright 2024, FXCM Trader   |
 //|                                       https://www.fxcm.com       |
 //+------------------------------------------------------------------+
-#pragma once
+#ifndef __SignalGenerator_MQH__
+#define __SignalGenerator_MQH__
+
 
 #include "../include/Constants.mqh"
 #include "../include/Types.mqh"
@@ -234,3 +236,4 @@ bool CSignalGenerator::ValidateSignal(TradeSignal& signal)
 }
 
 //+------------------------------------------------------------------+
+#endif // __SignalGenerator_MQH__

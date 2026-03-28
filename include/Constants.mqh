@@ -3,7 +3,9 @@
 //|                                    Copyright 2024, FXCM Trader   |
 //|                                       https://www.fxcm.com       |
 //+------------------------------------------------------------------+
-#pragma once
+#ifndef __Constants_MQH__
+#define __Constants_MQH__
+
 
 //--- 交易信号类型
 #define SIGNAL_NONE    0    // 无信号
@@ -88,3 +90,4 @@
 #define PRICE_EPSILON         0.00001 // 价格比较精度
 
 //+------------------------------------------------------------------+
+#endif // __Constants_MQH__

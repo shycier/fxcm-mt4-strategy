@@ -3,7 +3,9 @@
 //|                                    Copyright 2024, FXCM Trader   |
 //|                                       https://www.fxcm.com       |
 //+------------------------------------------------------------------+
-#pragma once
+#ifndef __OrderManager_MQH__
+#define __OrderManager_MQH__
+
 
 #include "../include/Constants.mqh"
 #include "../include/Types.mqh"
@@ -456,3 +458,4 @@ void COrderManager::ResetStats()
 }
 
 //+------------------------------------------------------------------+
+#endif // __OrderManager_MQH__

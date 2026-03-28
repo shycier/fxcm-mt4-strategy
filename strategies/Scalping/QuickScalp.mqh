@@ -3,7 +3,9 @@
 //|                                    Copyright 2024, FXCM Trader   |
 //|                                       https://www.fxcm.com       |
 //+------------------------------------------------------------------+
-#pragma once
+#ifndef __QuickScalp_MQH__
+#define __QuickScalp_MQH__
+
 
 #include "../../core/SignalGenerator.mqh"
 #include "../../utils/MathUtils.mqh"
@@ -255,3 +257,4 @@ int CQuickScalp::GenerateSignal(double& sl, double& tp)
 }
 
 //+------------------------------------------------------------------+
+#endif // __QuickScalp_MQH__

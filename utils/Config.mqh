@@ -3,7 +3,9 @@
 //|                                    Copyright 2024, FXCM Trader   |
 //|                                       https://www.fxcm.com       |
 //+------------------------------------------------------------------+
-#pragma once
+#ifndef __Config_MQH__
+#define __Config_MQH__
+
 
 #include "../include/Constants.mqh"
 #include "../include/Types.mqh"
@@ -438,3 +440,4 @@ bool CConfig::GetNextKey(string& key, string& value)
 }
 
 //+------------------------------------------------------------------+
+#endif // __Config_MQH__

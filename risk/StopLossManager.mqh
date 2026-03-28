@@ -3,7 +3,9 @@
 //|                                    Copyright 2024, FXCM Trader   |
 //|                                       https://www.fxcm.com       |
 //+------------------------------------------------------------------+
-#pragma once
+#ifndef __StopLossManager_MQH__
+#define __StopLossManager_MQH__
+
 
 #include "../include/Constants.mqh"
 #include "../include/Types.mqh"
@@ -435,3 +437,4 @@ bool CStopLossManager::ValidateTakeProfit(int orderType, double entryPrice, doub
 }
 
 //+------------------------------------------------------------------+
+#endif // __StopLossManager_MQH__

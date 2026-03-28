@@ -3,7 +3,9 @@
 //|                                    Copyright 2024, FXCM Trader   |
 //|                                       https://www.fxcm.com       |
 //+------------------------------------------------------------------+
-#pragma once
+#ifndef __Common_MQH__
+#define __Common_MQH__
+
 
 #include "Constants.mqh"
 #include "Types.mqh"
@@ -167,3 +169,4 @@ string FormatPrice(double price, string symbol = "")
 }
 
 //+------------------------------------------------------------------+
+#endif // __Common_MQH__

@@ -3,7 +3,9 @@
 //|                                    Copyright 2024, FXCM Trader   |
 //|                                       https://www.fxcm.com       |
 //+------------------------------------------------------------------+
-#pragma once
+#ifndef __ChannelBreakout_MQH__
+#define __ChannelBreakout_MQH__
+
 
 #include "../../core/SignalGenerator.mqh"
 #include "../../utils/MathUtils.mqh"
@@ -196,3 +198,4 @@ int CChannelBreakout::GenerateSignal(double& sl, double& tp)
 }
 
 //+------------------------------------------------------------------+
+#endif // __ChannelBreakout_MQH__

@@ -3,7 +3,9 @@
 //|                                    Copyright 2024, FXCM Trader   |
 //|                                       https://www.fxcm.com       |
 //+------------------------------------------------------------------+
-#pragma once
+#ifndef __MathUtils_MQH__
+#define __MathUtils_MQH__
+
 
 #include "../include/Constants.mqh"
 
@@ -230,3 +232,4 @@ double Correlation(const double& array1[], const double& array2[], int count)
 }
 
 //+------------------------------------------------------------------+
+#endif // __MathUtils_MQH__

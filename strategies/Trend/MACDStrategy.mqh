@@ -3,7 +3,9 @@
 //|                                    Copyright 2024, FXCM Trader   |
 //|                                       https://www.fxcm.com       |
 //+------------------------------------------------------------------+
-#pragma once
+#ifndef __MACDStrategy_MQH__
+#define __MACDStrategy_MQH__
+
 
 #include "../../core/SignalGenerator.mqh"
 #include "../../utils/MathUtils.mqh"
@@ -175,3 +177,4 @@ int CMACDStrategy::GenerateSignal(double& sl, double& tp)
 }
 
 //+------------------------------------------------------------------+
+#endif // __MACDStrategy_MQH__

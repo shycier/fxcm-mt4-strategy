@@ -3,7 +3,9 @@
 //|                                    Copyright 2024, FXCM Trader   |
 //|                                       https://www.fxcm.com       |
 //+------------------------------------------------------------------+
-#pragma once
+#ifndef __TimeUtils_MQH__
+#define __TimeUtils_MQH__
+
 
 #include "../include/Constants.mqh"
 
@@ -228,3 +230,4 @@ string FormatDuration(int seconds)
 }
 
 //+------------------------------------------------------------------+
+#endif // __TimeUtils_MQH__

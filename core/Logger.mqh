@@ -3,7 +3,9 @@
 //|                                    Copyright 2024, FXCM Trader   |
 //|                                       https://www.fxcm.com       |
 //+------------------------------------------------------------------+
-#pragma once
+#ifndef __Logger_MQH__
+#define __Logger_MQH__
+
 
 #include "../include/Constants.mqh"
 #include "../include/Types.mqh"
@@ -227,3 +229,4 @@ CLogger g_logger;
 #define LOG_INFO(msg) g_logger.Info(msg, __FUNCTION__, __LINE__)
 #define LOG_DEBUG(msg) g_logger.Debug(msg, __FUNCTION__, __LINE__)
 //+------------------------------------------------------------------+
+#endif // __Logger_MQH__

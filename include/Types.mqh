@@ -3,7 +3,9 @@
 //|                                    Copyright 2024, FXCM Trader   |
 //|                                       https://www.fxcm.com       |
 //+------------------------------------------------------------------+
-#pragma once
+#ifndef __Types_MQH__
+#define __Types_MQH__
+
 
 #include "Constants.mqh"
 
@@ -214,3 +216,4 @@ enum TradingSession
 };
 
 //+------------------------------------------------------------------+
+#endif // __Types_MQH__

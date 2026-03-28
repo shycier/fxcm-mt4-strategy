@@ -3,7 +3,9 @@
 //|                                    Copyright 2024, FXCM Trader   |
 //|                                       https://www.fxcm.com       |
 //+------------------------------------------------------------------+
-#pragma once
+#ifndef __PositionSizer_MQH__
+#define __PositionSizer_MQH__
+
 
 #include "../include/Constants.mqh"
 #include "../include/Types.mqh"
@@ -314,3 +316,4 @@ double CPositionSizer::GetMaxAllowedLots(const string& symbol)
 }
 
 //+------------------------------------------------------------------+
+#endif // __PositionSizer_MQH__

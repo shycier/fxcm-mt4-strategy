@@ -133,8 +133,8 @@ void CSupportResistance::FindLevels()
    }
 
    //--- 找出最高和最低点
-   int highestIdx = ArrayMaximum(high, 0, SR_Lookback);
-   int lowestIdx = ArrayMinimum(low, 0, SR_Lookback);
+   int highestIdx = ArrayMaximum(high, SR_Lookback, 0);
+   int lowestIdx = ArrayMinimum(low, SR_Lookback, 0);
 
    if(highestIdx < 0 || highestIdx >= ArraySize(high) || lowestIdx < 0 || lowestIdx >= ArraySize(low))
    {

@@ -169,8 +169,8 @@ void CalculateSupportResistance(double& support[], double& resistance[],
    if(CopyClose(symbol, timeFrame, 0, lookback, close) <= 0) return;
 
    //--- 找出最高和最低点
-   double highestHigh = high[ArrayMaximum(high, 0, lookback)];
-   double lowestLow = low[ArrayMinimum(low, 0, lookback)];
+   double highestHigh = high[ArrayMaximum(high, lookback, 0)];
+   double lowestLow = low[ArrayMinimum(low, lookback, 0)];
    double currentClose = close[0];
 
    //--- 计算斐波那契回撤位

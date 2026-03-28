@@ -124,8 +124,8 @@ void CChannelBreakout::CalculateChannel()
    // 检查数组大小
    if(ArraySize(high) < CB_ChannelPeriod || ArraySize(low) < CB_ChannelPeriod) return;
 
-   m_channelHigh = high[ArrayMaximum(high, 0, CB_ChannelPeriod)];
-   m_channelLow = low[ArrayMinimum(low, 0, CB_ChannelPeriod)];
+   m_channelHigh = high[ArrayMaximum(high, CB_ChannelPeriod, 0)];
+   m_channelLow = low[ArrayMinimum(low, CB_ChannelPeriod, 0)];
 }
 
 //+------------------------------------------------------------------+

@@ -8,9 +8,9 @@
 #property version   "1.00"
 #property strict
 
-#include "core/TradeEngine.mqh"
-#include "strategies/MeanReversion/RSIStrategy.mqh"
-#include "strategies/MeanReversion/BollingerStrategy.mqh"
+#include "../core/TradeEngine.mqh"
+#include "../strategies/MeanReversion/RSIStrategy.mqh"
+#include "../strategies/MeanReversion/BollingerStrategy.mqh"
 
 //+------------------------------------------------------------------+
 //| 输入参数                                                           |

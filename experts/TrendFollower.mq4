@@ -8,9 +8,9 @@
 #property version   "1.00"
 #property strict
 
-#include "core/TradeEngine.mqh"
-#include "strategies/Trend/MAStrategy.mqh"
-#include "strategies/Trend/MACDStrategy.mqh"
+#include "../core/TradeEngine.mqh"
+#include "../strategies/Trend/MAStrategy.mqh"
+#include "../strategies/Trend/MACDStrategy.mqh"
 
 //+------------------------------------------------------------------+
 //| 输入参数                                                           |

@@ -8,9 +8,9 @@
 #property version   "1.00"
 #property strict
 
-#include "core/TradeEngine.mqh"
-#include "strategies/Breakout/ChannelBreakout.mqh"
-#include "strategies/Breakout/SupportResistance.mqh"
+#include "../core/TradeEngine.mqh"
+#include "../strategies/Breakout/ChannelBreakout.mqh"
+#include "../strategies/Breakout/SupportResistance.mqh"
 
 //+------------------------------------------------------------------+
 //| 输入参数                                                           |

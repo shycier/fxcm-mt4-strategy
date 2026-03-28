@@ -8,8 +8,8 @@
 #property version   "1.00"
 #property strict
 
-#include "core/TradeEngine.mqh"
-#include "strategies/Scalping/QuickScalp.mqh"
+#include "../core/TradeEngine.mqh"
+#include "../strategies/Scalping/QuickScalp.mqh"
 
 //+------------------------------------------------------------------+
 //| 输入参数                                                           |

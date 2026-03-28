@@ -190,8 +190,8 @@ void OnChartEvent(const int id,
          case 'D':
             if(g_tradeEngine != NULL)
             {
-               bool enabled = !g_tradeEngine.IsEnabled();
-               g_tradeEngine.SetEnabled(enabled);
+               bool enabled = !(*g_tradeEngine).IsEnabled();
+               (*g_tradeEngine).SetEnabled(enabled);
                Print("Trading ", enabled ? "ENABLED" : "DISABLED");
             }
             break;

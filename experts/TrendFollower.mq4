@@ -191,8 +191,8 @@ void OnChartEvent(const int id,
          case 'D': // D键 - 禁用/启用交易
             if(g_tradeEngine != NULL)
             {
-               bool enabled = !g_tradeEngine.IsEnabled();
-               g_tradeEngine.SetEnabled(enabled);
+               bool enabled = !(*g_tradeEngine).IsEnabled();
+               (*g_tradeEngine).SetEnabled(enabled);
                Print("Trading ", enabled ? "ENABLED" : "DISABLED");
             }
             break;

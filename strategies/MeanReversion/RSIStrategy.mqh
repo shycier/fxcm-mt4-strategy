@@ -27,8 +27,6 @@ input bool   RSI_UseConfirmation = true; // 使用确认信号
 class CRSIStrategy : public CSignalGenerator
 {
 private:
-   int      m_rsiHandle;        // RSI句柄
-   double   m_rsiBuffer[];      // RSI值缓存
    double   m_prevRSI;          // 上一个RSI值
 
    //--- 辅助方法
@@ -50,23 +48,20 @@ public:
 //+------------------------------------------------------------------+
 //| 默认构造函数                                                       |
 //+------------------------------------------------------------------+
-CRSIStrategy::CRSIStrategy() :
-   CSignalGenerator(),
-   m_rsiHandle(INVALID_HANDLE),
-   m_prevRSI(50)
+CRSIStrategy::CRSIStrategy()
 {
-   ArraySetAsSeries(m_rsiBuffer, true);
+   m_prevRSI = 50;
 }
 
 //+------------------------------------------------------------------+
 //| 带参数构造函数                                                     |
 //+------------------------------------------------------------------+
-CRSIStrategy::CRSIStrategy(const string symbol, int timeFrame, int magic) :
-   CSignalGenerator(symbol, timeFrame, magic),
-   m_rsiHandle(INVALID_HANDLE),
-   m_prevRSI(50)
+CRSIStrategy::CRSIStrategy(const string symbol, int timeFrame, int magic)
 {
-   ArraySetAsSeries(m_rsiBuffer, true);
+   m_symbol = symbol;
+   m_timeFrame = timeFrame;
+   m_magic = magic;
+   m_prevRSI = 50;
 }
 
 //+------------------------------------------------------------------+
@@ -84,15 +79,7 @@ bool CRSIStrategy::Init()
 {
    if(!CSignalGenerator::Init()) return false;
 
-   //--- 创建RSI指标
-   m_rsiHandle = iRSI(m_symbol, m_timeFrame, RSI_Period, RSI_AppliedPrice);
-
-   if(m_rsiHandle == INVALID_HANDLE)
-   {
-      LOG_ERROR("Failed to create RSI indicator");
-      return false;
-   }
-
+   //--- MT4直接调用指标函数,无需创建句柄
    LOG_INFO(StringFormat("RSI Strategy initialized: Period=%d, OB=%d, OS=%d",
                          RSI_Period, RSI_Overbought, RSI_Oversold));
    return true;
@@ -103,12 +90,7 @@ bool CRSIStrategy::Init()
 //+------------------------------------------------------------------+
 void CRSIStrategy::Deinit()
 {
-   if(m_rsiHandle != INVALID_HANDLE)
-   {
-      IndicatorRelease(m_rsiHandle);
-      m_rsiHandle = INVALID_HANDLE;
-   }
-
+   //--- MT4无需释放指标句柄
    CSignalGenerator::Deinit();
 }
 
@@ -117,13 +99,14 @@ void CRSIStrategy::Deinit()
 //+------------------------------------------------------------------+
 double CRSIStrategy::GetRSIValue(int shift)
 {
-   double buffer[];
-   ArraySetAsSeries(buffer, true);
+   //--- MT4风格:直接调用iRSI函数返回RSI值
+   double rsi = iRSI(m_symbol, m_timeFrame, RSI_Period, RSI_AppliedPrice, shift);
 
-   if(CopyBuffer(m_rsiHandle, 0, shift, 1, buffer) <= 0)
-      return 50; // 返回中性值
+   // 如果返回0(错误),返回中性值50
+   if(rsi == 0)
+      return 50;
 
-   return buffer[0];
+   return rsi;
 }
 
 //+------------------------------------------------------------------+

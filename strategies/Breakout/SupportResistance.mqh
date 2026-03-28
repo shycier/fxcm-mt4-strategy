@@ -51,25 +51,26 @@ public:
 //+------------------------------------------------------------------+
 //| 默认构造函数                                                       |
 //+------------------------------------------------------------------+
-CSupportResistance::CSupportResistance() :
-   CSignalGenerator(),
-   m_resistanceLevel(0),
-   m_supportLevel(0),
-   m_resistanceTouches(0),
-   m_supportTouches(0)
+CSupportResistance::CSupportResistance()
 {
+   m_resistanceLevel = 0;
+   m_supportLevel = 0;
+   m_resistanceTouches = 0;
+   m_supportTouches = 0;
 }
 
 //+------------------------------------------------------------------+
 //| 带参数构造函数                                                     |
 //+------------------------------------------------------------------+
-CSupportResistance::CSupportResistance(const string symbol, int timeFrame, int magic) :
-   CSignalGenerator(symbol, timeFrame, magic),
-   m_resistanceLevel(0),
-   m_supportLevel(0),
-   m_resistanceTouches(0),
-   m_supportTouches(0)
+CSupportResistance::CSupportResistance(const string symbol, int timeFrame, int magic)
 {
+   m_symbol = symbol;
+   m_timeFrame = timeFrame;
+   m_magic = magic;
+   m_resistanceLevel = 0;
+   m_supportLevel = 0;
+   m_resistanceTouches = 0;
+   m_supportTouches = 0;
 }
 
 //+------------------------------------------------------------------+

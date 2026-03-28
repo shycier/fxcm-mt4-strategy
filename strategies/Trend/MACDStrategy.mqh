@@ -27,10 +27,6 @@ input int    MACD_TP_Pips = 80;        // 止盈点数
 class CMACDStrategy : public CSignalGenerator
 {
 private:
-   int      m_macdHandle;       // MACD句柄
-   double   m_macdMain[];       // MACD主线
-   double   m_macdSignal[];     // MACD信号线
-
    //--- 辅助方法
    bool     GetMACDValues(int shift, double& main, double& signal);
 
@@ -50,23 +46,18 @@ public:
 //+------------------------------------------------------------------+
 //| 默认构造函数                                                       |
 //+------------------------------------------------------------------+
-CMACDStrategy::CMACDStrategy() :
-   CSignalGenerator(),
-   m_macdHandle(INVALID_HANDLE)
+CMACDStrategy::CMACDStrategy()
 {
-   ArraySetAsSeries(m_macdMain, true);
-   ArraySetAsSeries(m_macdSignal, true);
 }
 
 //+------------------------------------------------------------------+
 //| 带参数构造函数                                                     |
 //+------------------------------------------------------------------+
-CMACDStrategy::CMACDStrategy(const string symbol, int timeFrame, int magic) :
-   CSignalGenerator(symbol, timeFrame, magic),
-   m_macdHandle(INVALID_HANDLE)
+CMACDStrategy::CMACDStrategy(const string symbol, int timeFrame, int magic)
 {
-   ArraySetAsSeries(m_macdMain, true);
-   ArraySetAsSeries(m_macdSignal, true);
+   m_symbol = symbol;
+   m_timeFrame = timeFrame;
+   m_magic = magic;
 }
 
 //+------------------------------------------------------------------+
@@ -84,15 +75,7 @@ bool CMACDStrategy::Init()
 {
    if(!CSignalGenerator::Init()) return false;
 
-   //--- 创建MACD指标
-   m_macdHandle = iMACD(m_symbol, m_timeFrame, MACD_Fast, MACD_Slow, MACD_Signal, MACD_AppliedPrice);
-
-   if(m_macdHandle == INVALID_HANDLE)
-   {
-      LOG_ERROR("Failed to create MACD indicator");
-      return false;
-   }
-
+   //--- MT4直接调用指标函数,无需创建句柄
    LOG_INFO(StringFormat("MACD Strategy initialized: Fast=%d, Slow=%d, Signal=%d",
                          MACD_Fast, MACD_Slow, MACD_Signal));
    return true;
@@ -103,12 +86,7 @@ bool CMACDStrategy::Init()
 //+------------------------------------------------------------------+
 void CMACDStrategy::Deinit()
 {
-   if(m_macdHandle != INVALID_HANDLE)
-   {
-      IndicatorRelease(m_macdHandle);
-      m_macdHandle = INVALID_HANDLE;
-   }
-
+   //--- MT4无需释放指标句柄
    CSignalGenerator::Deinit();
 }
 
@@ -117,22 +95,11 @@ void CMACDStrategy::Deinit()
 //+------------------------------------------------------------------+
 bool CMACDStrategy::GetMACDValues(int shift, double& main, double& signal)
 {
-   double mainBuffer[];
-   double signalBuffer[];
+   //--- MT4风格:直接调用iMACD函数
+   main = iMACD(m_symbol, m_timeFrame, MACD_Fast, MACD_Slow, MACD_Signal, MACD_AppliedPrice, MODE_MAIN, shift);
+   signal = iMACD(m_symbol, m_timeFrame, MACD_Fast, MACD_Slow, MACD_Signal, MACD_AppliedPrice, MODE_SIGNAL, shift);
 
-   ArraySetAsSeries(mainBuffer, true);
-   ArraySetAsSeries(signalBuffer, true);
-
-   if(CopyBuffer(m_macdHandle, 0, shift, 1, mainBuffer) <= 0)
-      return false;
-
-   if(CopyBuffer(m_macdHandle, 1, shift, 1, signalBuffer) <= 0)
-      return false;
-
-   main = mainBuffer[0];
-   signal = signalBuffer[0];
-
-   return true;
+   return (main != 0 && signal != 0);
 }
 
 //+------------------------------------------------------------------+

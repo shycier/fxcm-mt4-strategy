@@ -28,17 +28,13 @@ input bool   QS_FilterSpread = true;   // 过滤高点差
 class CQuickScalp : public CSignalGenerator
 {
 private:
-   int      m_fastMAHandle;     // 快速MA句柄
-   int      m_slowMAHandle;     // 慢速MA句柄
-   int      m_rsiHandle;        // RSI句柄
-
    datetime m_lastTradeTime;    // 上次交易时间
    int      m_minTradeInterval; // 最小交易间隔(秒)
 
    //--- 辅助方法
    bool     CheckSpread();
    bool     CheckTradeInterval();
-   double   GetMAValue(int handle, int shift);
+   double   GetMAValue(int period, int shift);
    double   GetRSIValue(int shift);
 
 public:
@@ -60,27 +56,22 @@ public:
 //+------------------------------------------------------------------+
 //| 默认构造函数                                                       |
 //+------------------------------------------------------------------+
-CQuickScalp::CQuickScalp() :
-   CSignalGenerator(),
-   m_fastMAHandle(INVALID_HANDLE),
-   m_slowMAHandle(INVALID_HANDLE),
-   m_rsiHandle(INVALID_HANDLE),
-   m_lastTradeTime(0),
-   m_minTradeInterval(30)
+CQuickScalp::CQuickScalp()
 {
+   m_lastTradeTime = 0;
+   m_minTradeInterval = 30;
 }
 
 //+------------------------------------------------------------------+
 //| 带参数构造函数                                                     |
 //+------------------------------------------------------------------+
-CQuickScalp::CQuickScalp(const string symbol, int timeFrame, int magic) :
-   CSignalGenerator(symbol, timeFrame, magic),
-   m_fastMAHandle(INVALID_HANDLE),
-   m_slowMAHandle(INVALID_HANDLE),
-   m_rsiHandle(INVALID_HANDLE),
-   m_lastTradeTime(0),
-   m_minTradeInterval(30)
+CQuickScalp::CQuickScalp(const string symbol, int timeFrame, int magic)
 {
+   m_symbol = symbol;
+   m_timeFrame = timeFrame;
+   m_magic = magic;
+   m_lastTradeTime = 0;
+   m_minTradeInterval = 30;
 }
 
 //+------------------------------------------------------------------+
@@ -98,17 +89,7 @@ bool CQuickScalp::Init()
 {
    if(!CSignalGenerator::Init()) return false;
 
-   //--- 创建指标
-   m_fastMAHandle = iMA(m_symbol, m_timeFrame, QS_FastMA, 0, MODE_EMA, PRICE_CLOSE);
-   m_slowMAHandle = iMA(m_symbol, m_timeFrame, QS_SlowMA, 0, MODE_EMA, PRICE_CLOSE);
-   m_rsiHandle = iRSI(m_symbol, m_timeFrame, QS_RSI_Period, PRICE_CLOSE);
-
-   if(m_fastMAHandle == INVALID_HANDLE || m_slowMAHandle == INVALID_HANDLE || m_rsiHandle == INVALID_HANDLE)
-   {
-      LOG_ERROR("Failed to create indicators for scalping");
-      return false;
-   }
-
+   //--- MT4直接调用指标函数,无需创建句柄
    LOG_INFO(StringFormat("Quick Scalp initialized: FastMA=%d, SlowMA=%d, RSI=%d",
                          QS_FastMA, QS_SlowMA, QS_RSI_Period));
    return true;
@@ -119,24 +100,7 @@ bool CQuickScalp::Init()
 //+------------------------------------------------------------------+
 void CQuickScalp::Deinit()
 {
-   if(m_fastMAHandle != INVALID_HANDLE)
-   {
-      IndicatorRelease(m_fastMAHandle);
-      m_fastMAHandle = INVALID_HANDLE;
-   }
-
-   if(m_slowMAHandle != INVALID_HANDLE)
-   {
-      IndicatorRelease(m_slowMAHandle);
-      m_slowMAHandle = INVALID_HANDLE;
-   }
-
-   if(m_rsiHandle != INVALID_HANDLE)
-   {
-      IndicatorRelease(m_rsiHandle);
-      m_rsiHandle = INVALID_HANDLE;
-   }
-
+   //--- MT4无需释放指标句柄
    CSignalGenerator::Deinit();
 }
 
@@ -170,15 +134,10 @@ bool CQuickScalp::CheckTradeInterval()
 //+------------------------------------------------------------------+
 //| 获取MA值                                                           |
 //+------------------------------------------------------------------+
-double CQuickScalp::GetMAValue(int handle, int shift)
+double CQuickScalp::GetMAValue(int period, int shift)
 {
-   double buffer[];
-   ArraySetAsSeries(buffer, true);
-
-   if(CopyBuffer(handle, 0, shift, 1, buffer) <= 0)
-      return 0;
-
-   return buffer[0];
+   //--- MT4风格:直接调用iMA函数返回MA值
+   return iMA(m_symbol, m_timeFrame, period, 0, MODE_EMA, PRICE_CLOSE, shift);
 }
 
 //+------------------------------------------------------------------+
@@ -186,13 +145,8 @@ double CQuickScalp::GetMAValue(int handle, int shift)
 //+------------------------------------------------------------------+
 double CQuickScalp::GetRSIValue(int shift)
 {
-   double buffer[];
-   ArraySetAsSeries(buffer, true);
-
-   if(CopyBuffer(m_rsiHandle, 0, shift, 1, buffer) <= 0)
-      return 50;
-
-   return buffer[0];
+   //--- MT4风格:直接调用iRSI函数返回RSI值
+   return iRSI(m_symbol, m_timeFrame, QS_RSI_Period, PRICE_CLOSE, shift);
 }
 
 //+------------------------------------------------------------------+
@@ -215,10 +169,10 @@ int CQuickScalp::GenerateSignal(double& sl, double& tp)
    }
 
    //--- 获取指标值
-   double fastMA0 = GetMAValue(m_fastMAHandle, 0);
-   double fastMA1 = GetMAValue(m_fastMAHandle, 1);
-   double slowMA0 = GetMAValue(m_slowMAHandle, 0);
-   double slowMA1 = GetMAValue(m_slowMAHandle, 1);
+   double fastMA0 = GetMAValue(QS_FastMA, 0);
+   double fastMA1 = GetMAValue(QS_FastMA, 1);
+   double slowMA0 = GetMAValue(QS_SlowMA, 0);
+   double slowMA1 = GetMAValue(QS_SlowMA, 1);
    double rsi = GetRSIValue(0);
 
    if(fastMA0 == 0 || fastMA1 == 0 || slowMA0 == 0 || slowMA1 == 0)

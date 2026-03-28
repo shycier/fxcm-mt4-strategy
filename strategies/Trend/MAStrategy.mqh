@@ -28,14 +28,10 @@ input int    MA_TrailPips = 20;        // 移动止损点数
 class CMAStrategy : public CSignalGenerator
 {
 private:
-   int      m_fastHandle;       // 快速MA句柄
-   int      m_slowHandle;       // 慢速MA句柄
-   double   m_fastMA[];         // 快速MA值
-   double   m_slowMA[];         // 慢速MA值
    int      m_prevSignal;       // 上一个信号
 
    //--- 方法
-   double   GetMAValue(int handle, int shift);
+   double   GetMAValue(int period, int shift);
 
 public:
    //--- 构造函数/析构函数
@@ -53,27 +49,20 @@ public:
 //+------------------------------------------------------------------+
 //| 默认构造函数                                                       |
 //+------------------------------------------------------------------+
-CMAStrategy::CMAStrategy() :
-   CSignalGenerator(),
-   m_fastHandle(INVALID_HANDLE),
-   m_slowHandle(INVALID_HANDLE),
-   m_prevSignal(SIGNAL_NONE)
+CMAStrategy::CMAStrategy()
 {
-   ArraySetAsSeries(m_fastMA, true);
-   ArraySetAsSeries(m_slowMA, true);
+   m_prevSignal = SIGNAL_NONE;
 }
 
 //+------------------------------------------------------------------+
 //| 带参数构造函数                                                     |
 //+------------------------------------------------------------------+
-CMAStrategy::CMAStrategy(const string symbol, int timeFrame, int magic) :
-   CSignalGenerator(symbol, timeFrame, magic),
-   m_fastHandle(INVALID_HANDLE),
-   m_slowHandle(INVALID_HANDLE),
-   m_prevSignal(SIGNAL_NONE)
+CMAStrategy::CMAStrategy(const string symbol, int timeFrame, int magic)
 {
-   ArraySetAsSeries(m_fastMA, true);
-   ArraySetAsSeries(m_slowMA, true);
+   m_symbol = symbol;
+   m_timeFrame = timeFrame;
+   m_magic = magic;
+   m_prevSignal = SIGNAL_NONE;
 }
 
 //+------------------------------------------------------------------+
@@ -91,16 +80,7 @@ bool CMAStrategy::Init()
 {
    if(!CSignalGenerator::Init()) return false;
 
-   //--- 创建MA指标
-   m_fastHandle = iMA(m_symbol, m_timeFrame, MA_FastPeriod, 0, MA_Method, MA_AppliedPrice);
-   m_slowHandle = iMA(m_symbol, m_timeFrame, MA_SlowPeriod, 0, MA_Method, MA_AppliedPrice);
-
-   if(m_fastHandle == INVALID_HANDLE || m_slowHandle == INVALID_HANDLE)
-   {
-      LOG_ERROR("Failed to create MA indicators");
-      return false;
-   }
-
+   //--- MT4直接调用指标函数,无需创建句柄
    LOG_INFO(StringFormat("MA Strategy initialized: Fast=%d, Slow=%d", MA_FastPeriod, MA_SlowPeriod));
    return true;
 }
@@ -110,33 +90,17 @@ bool CMAStrategy::Init()
 //+------------------------------------------------------------------+
 void CMAStrategy::Deinit()
 {
-   if(m_fastHandle != INVALID_HANDLE)
-   {
-      IndicatorRelease(m_fastHandle);
-      m_fastHandle = INVALID_HANDLE;
-   }
-
-   if(m_slowHandle != INVALID_HANDLE)
-   {
-      IndicatorRelease(m_slowHandle);
-      m_slowHandle = INVALID_HANDLE;
-   }
-
+   //--- MT4无需释放指标句柄
    CSignalGenerator::Deinit();
 }
 
 //+------------------------------------------------------------------+
 //| 获取MA值                                                           |
 //+------------------------------------------------------------------+
-double CMAStrategy::GetMAValue(int handle, int shift)
+double CMAStrategy::GetMAValue(int period, int shift)
 {
-   double value[];
-   ArraySetAsSeries(value, true);
-
-   if(CopyBuffer(handle, 0, shift, 1, value) <= 0)
-      return 0;
-
-   return value[0];
+   //--- MT4风格:直接调用iMA函数返回MA值
+   return iMA(m_symbol, m_timeFrame, period, 0, MA_Method, MA_AppliedPrice, shift);
 }
 
 //+------------------------------------------------------------------+
@@ -147,10 +111,10 @@ int CMAStrategy::GenerateSignal(double& sl, double& tp)
    if(!m_initialized) return SIGNAL_NONE;
 
    //--- 获取MA值
-   double fastMA0 = GetMAValue(m_fastHandle, 0);
-   double fastMA1 = GetMAValue(m_fastHandle, 1);
-   double slowMA0 = GetMAValue(m_slowHandle, 0);
-   double slowMA1 = GetMAValue(m_slowHandle, 1);
+   double fastMA0 = GetMAValue(MA_FastPeriod, 0);
+   double fastMA1 = GetMAValue(MA_FastPeriod, 1);
+   double slowMA0 = GetMAValue(MA_SlowPeriod, 0);
+   double slowMA1 = GetMAValue(MA_SlowPeriod, 1);
 
    if(fastMA0 == 0 || fastMA1 == 0 || slowMA0 == 0 || slowMA1 == 0)
       return SIGNAL_NONE;

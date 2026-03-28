@@ -172,7 +172,7 @@ void OnTimer()
 void OnChartEvent(const int id,
                   const long &lparam,
                   const double &dparam,
-                  const string &sparam)
+                  const string sparam)
 {
    //--- 处理图表事件
    if(id == CHARTEVENT_KEYDOWN)

@@ -40,7 +40,7 @@ private:
 public:
    //--- 构造函数/析构函数
    CMAStrategy();
-   CMAStrategy(const string& symbol, int timeFrame, int magic);
+   CMAStrategy(const string symbol, int timeFrame, int magic);
    virtual ~CMAStrategy();
 
    //--- 重写基类方法
@@ -66,7 +66,7 @@ CMAStrategy::CMAStrategy() :
 //+------------------------------------------------------------------+
 //| 带参数构造函数                                                     |
 //+------------------------------------------------------------------+
-CMAStrategy::CMAStrategy(const string& symbol, int timeFrame, int magic) :
+CMAStrategy::CMAStrategy(const string symbol, int timeFrame, int magic) :
    CSignalGenerator(symbol, timeFrame, magic),
    m_fastHandle(INVALID_HANDLE),
    m_slowHandle(INVALID_HANDLE),

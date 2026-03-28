@@ -37,7 +37,7 @@ private:
 public:
    //--- 构造函数/析构函数
    CRSIStrategy();
-   CRSIStrategy(const string& symbol, int timeFrame, int magic);
+   CRSIStrategy(const string symbol, int timeFrame, int magic);
    virtual ~CRSIStrategy();
 
    //--- 重写基类方法
@@ -61,7 +61,7 @@ CRSIStrategy::CRSIStrategy() :
 //+------------------------------------------------------------------+
 //| 带参数构造函数                                                     |
 //+------------------------------------------------------------------+
-CRSIStrategy::CRSIStrategy(const string& symbol, int timeFrame, int magic) :
+CRSIStrategy::CRSIStrategy(const string symbol, int timeFrame, int magic) :
    CSignalGenerator(symbol, timeFrame, magic),
    m_rsiHandle(INVALID_HANDLE),
    m_prevRSI(50)

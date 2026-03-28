@@ -37,7 +37,7 @@ private:
 public:
    //--- 构造函数/析构函数
    CBollingerStrategy();
-   CBollingerStrategy(const string& symbol, int timeFrame, int magic);
+   CBollingerStrategy(const string symbol, int timeFrame, int magic);
    virtual ~CBollingerStrategy();
 
    //--- 重写基类方法
@@ -62,7 +62,7 @@ CBollingerStrategy::CBollingerStrategy() :
 //+------------------------------------------------------------------+
 //| 带参数构造函数                                                     |
 //+------------------------------------------------------------------+
-CBollingerStrategy::CBollingerStrategy(const string& symbol, int timeFrame, int magic) :
+CBollingerStrategy::CBollingerStrategy(const string symbol, int timeFrame, int magic) :
    CSignalGenerator(symbol, timeFrame, magic),
    m_bbHandle(INVALID_HANDLE)
 {

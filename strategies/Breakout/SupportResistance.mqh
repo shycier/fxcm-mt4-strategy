@@ -38,7 +38,7 @@ private:
 public:
    //--- 构造函数/析构函数
    CSupportResistance();
-   CSupportResistance(const string& symbol, int timeFrame, int magic);
+   CSupportResistance(const string symbol, int timeFrame, int magic);
    virtual ~CSupportResistance();
 
    //--- 重写基类方法
@@ -63,7 +63,7 @@ CSupportResistance::CSupportResistance() :
 //+------------------------------------------------------------------+
 //| 带参数构造函数                                                     |
 //+------------------------------------------------------------------+
-CSupportResistance::CSupportResistance(const string& symbol, int timeFrame, int magic) :
+CSupportResistance::CSupportResistance(const string symbol, int timeFrame, int magic) :
    CSignalGenerator(symbol, timeFrame, magic),
    m_resistanceLevel(0),
    m_supportLevel(0),

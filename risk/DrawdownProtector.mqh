@@ -49,7 +49,7 @@ private:
    void            UpdatePeak();
    double          CalculateDrawdown();
    void            TriggerProtection();
-   void            SendAlert(const string& message);
+   void            SendAlert(const string message);
 
 public:
    //--- 构造函数
@@ -205,7 +205,7 @@ void CDrawdownProtector::TriggerProtection()
 //+------------------------------------------------------------------+
 //| 发送警告                                                           |
 //+------------------------------------------------------------------+
-void CDrawdownProtector::SendAlert(const string& message)
+void CDrawdownProtector::SendAlert(const string message)
 {
    Alert(message);
    LOG_WARNING(message);

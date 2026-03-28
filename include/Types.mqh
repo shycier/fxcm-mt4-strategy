@@ -151,10 +151,6 @@ struct MarketData
    int      digits;         // 小数位数
    double   pipValue;       // 每点价值
    double   lotSize;        // 标准手大小
-   double   high[];         // 最高价数组
-   double   low[];          // 最低价数组
-   double   close[];        // 收盘价数组
-   double   volume[];       // 成交量数组
 
    //--- 构造函数
    MarketData() : symbol(""), bid(0), ask(0), spread(0), point(0),

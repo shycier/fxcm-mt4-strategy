@@ -45,10 +45,10 @@ private:
 public:
    //--- 构造函数
    CRiskManager();
-   CRiskManager(const RiskParams& params);
+   CRiskManager(const RiskParams params);
 
    //--- 设置参数
-   void            SetRiskParams(const RiskParams& params) { m_riskParams = params; }
+   void            SetRiskParams(const RiskParams params) { m_riskParams = params; }
    void            SetMaxDailyLoss(double percent) { m_riskParams.maxDailyLoss = percent; }
    void            SetMaxWeeklyLoss(double percent) { m_riskParams.maxWeeklyLoss = percent; }
    void            SetMaxDrawdown(double percent) { m_riskParams.maxDrawdown = percent; }
@@ -117,7 +117,7 @@ CRiskManager::CRiskManager() :
 //+------------------------------------------------------------------+
 //| 带参数构造函数                                                     |
 //+------------------------------------------------------------------+
-CRiskManager::CRiskManager(const RiskParams& params) :
+CRiskManager::CRiskManager(const RiskParams params) :
    m_riskParams(params),
    m_startBalance(0),
    m_weeklyStartBalance(0),

@@ -25,45 +25,45 @@ private:
    int      m_count;          // 条目数量
 
    //--- 私有方法
-   int      FindKey(const string& key);
-   void     TrimString(string& str);
+   int      FindKey(const string key);
+   string   TrimString(const string str);
 
 public:
    //--- 构造函数
    CConfig();
-   CConfig(const string& fileName);
+   CConfig(const string fileName);
    ~CConfig();
 
    //--- 文件操作
-   bool     Load(const string& fileName = "");
-   bool     Save(const string& fileName = "");
+   bool     Load(const string fileName = "");
+   bool     Save(const string fileName = "");
 
    //--- 节操作
-   void     SetSection(const string& section) { m_section = section; }
+   void     SetSection(const string section) { m_section = section; }
    string   GetSection() const { return m_section; }
 
    //--- 读写方法
-   void     SetString(const string& key, const string& value);
-   string   GetString(const string& key, const string& defaultValue = "");
+   void     SetString(const string key, const string value);
+   string   GetString(const string key, const string defaultValue = "");
 
-   void     SetInt(const string& key, int value);
-   int      GetInt(const string& key, int defaultValue = 0);
+   void     SetInt(const string key, int value);
+   int      GetInt(const string key, int defaultValue = 0);
 
-   void     SetDouble(const string& key, double value);
-   double   GetDouble(const string& key, double defaultValue = 0.0);
+   void     SetDouble(const string key, double value);
+   double   GetDouble(const string key, double defaultValue = 0.0);
 
-   void     SetBool(const string& key, bool value);
-   bool     GetBool(const string& key, bool defaultValue = false);
+   void     SetBool(const string key, bool value);
+   bool     GetBool(const string key, bool defaultValue = false);
 
    //--- 工具方法
    void     Clear();
    int      GetCount() const { return m_count; }
-   bool     HasKey(const string& key);
-   bool     RemoveKey(const string& key);
+   bool     HasKey(const string key);
+   bool     RemoveKey(const string key);
 
    //--- 枚举
-   bool     GetFirstKey(string& key, string& value);
-   bool     GetNextKey(string& key, string& value);
+   bool     GetFirstKey(string key, string value);
+   bool     GetNextKey(string key, string value);
 };
 
 //+------------------------------------------------------------------+
@@ -152,7 +152,7 @@ CConfig::CConfig() :
 //+------------------------------------------------------------------+
 //| 带文件名构造函数                                                   |
 //+------------------------------------------------------------------+
-CConfig::CConfig(const string& fileName) :
+CConfig::CConfig(const string fileName) :
    m_fileName(fileName),
    m_section("General"),
    m_count(0)
@@ -172,7 +172,7 @@ CConfig::~CConfig()
 //+------------------------------------------------------------------+
 //| 加载配置文件                                                       |
 //+------------------------------------------------------------------+
-bool CConfig::Load(const string& fileName)
+bool CConfig::Load(const string fileName)
 {
    if(fileName != "") m_fileName = fileName;
 
@@ -185,7 +185,7 @@ bool CConfig::Load(const string& fileName)
    while(!FileIsEnding(handle))
    {
       line = FileReadString(handle);
-      TrimString(line);
+      line = TrimString(line);
 
       //--- 跳过空行和注释
       if(line == "" || StringGetChar(line, 0) == '#' || StringGetChar(line, 0) == ';')
@@ -209,8 +209,8 @@ bool CConfig::Load(const string& fileName)
          string key = StringSubstr(line, 0, pos);
          string value = StringSubstr(line, pos + 1);
 
-         TrimString(key);
-         TrimString(value);
+         key = TrimString(key);
+         value = TrimString(value);
 
          //--- 添加到存储
          string fullKey = m_section + "." + key;
@@ -225,7 +225,7 @@ bool CConfig::Load(const string& fileName)
 //+------------------------------------------------------------------+
 //| 保存配置文件                                                       |
 //+------------------------------------------------------------------+
-bool CConfig::Save(const string& fileName)
+bool CConfig::Save(const string fileName)
 {
    if(fileName != "") m_fileName = fileName;
 
@@ -264,7 +264,7 @@ bool CConfig::Save(const string& fileName)
 //+------------------------------------------------------------------+
 //| 查找键索引                                                         |
 //+------------------------------------------------------------------+
-int CConfig::FindKey(const string& key)
+int CConfig::FindKey(const string key)
 {
    for(int i = 0; i < m_count; i++)
    {
@@ -277,16 +277,18 @@ int CConfig::FindKey(const string& key)
 //+------------------------------------------------------------------+
 //| 去除字符串两端空白                                                 |
 //+------------------------------------------------------------------+
-void CConfig::TrimString(string& str)
+string CConfig::TrimString(const string str)
 {
-   str = StringTrimLeft(str);
-   str = StringTrimRight(str);
+   string result = str;
+   result = StringTrimLeft(result);
+   result = StringTrimRight(result);
+   return result;
 }
 
 //+------------------------------------------------------------------+
 //| 设置字符串值                                                       |
 //+------------------------------------------------------------------+
-void CConfig::SetString(const string& key, const string& value)
+void CConfig::SetString(const string key, const string value)
 {
    int index = FindKey(key);
 
@@ -311,7 +313,7 @@ void CConfig::SetString(const string& key, const string& value)
 //+------------------------------------------------------------------+
 //| 获取字符串值                                                       |
 //+------------------------------------------------------------------+
-string CConfig::GetString(const string& key, const string& defaultValue)
+string CConfig::GetString(const string key, const string defaultValue)
 {
    int index = FindKey(key);
    if(index >= 0)
@@ -322,7 +324,7 @@ string CConfig::GetString(const string& key, const string& defaultValue)
 //+------------------------------------------------------------------+
 //| 设置整数值                                                         |
 //+------------------------------------------------------------------+
-void CConfig::SetInt(const string& key, int value)
+void CConfig::SetInt(const string key, int value)
 {
    SetString(key, IntegerToString(value));
 }
@@ -330,7 +332,7 @@ void CConfig::SetInt(const string& key, int value)
 //+------------------------------------------------------------------+
 //| 获取整数值                                                         |
 //+------------------------------------------------------------------+
-int CConfig::GetInt(const string& key, int defaultValue)
+int CConfig::GetInt(const string key, int defaultValue)
 {
    string value = GetString(key);
    if(value == "") return defaultValue;
@@ -340,7 +342,7 @@ int CConfig::GetInt(const string& key, int defaultValue)
 //+------------------------------------------------------------------+
 //| 设置浮点值                                                         |
 //+------------------------------------------------------------------+
-void CConfig::SetDouble(const string& key, double value)
+void CConfig::SetDouble(const string key, double value)
 {
    SetString(key, DoubleToString(value, 8));
 }
@@ -348,7 +350,7 @@ void CConfig::SetDouble(const string& key, double value)
 //+------------------------------------------------------------------+
 //| 获取浮点值                                                         |
 //+------------------------------------------------------------------+
-double CConfig::GetDouble(const string& key, double defaultValue)
+double CConfig::GetDouble(const string key, double defaultValue)
 {
    string value = GetString(key);
    if(value == "") return defaultValue;
@@ -358,7 +360,7 @@ double CConfig::GetDouble(const string& key, double defaultValue)
 //+------------------------------------------------------------------+
 //| 设置布尔值                                                         |
 //+------------------------------------------------------------------+
-void CConfig::SetBool(const string& key, bool value)
+void CConfig::SetBool(const string key, bool value)
 {
    SetString(key, value ? "true" : "false");
 }
@@ -366,7 +368,7 @@ void CConfig::SetBool(const string& key, bool value)
 //+------------------------------------------------------------------+
 //| 获取布尔值                                                         |
 //+------------------------------------------------------------------+
-bool CConfig::GetBool(const string& key, bool defaultValue)
+bool CConfig::GetBool(const string key, bool defaultValue)
 {
    string value = GetString(key);
    if(value == "") return defaultValue;
@@ -384,7 +386,7 @@ void CConfig::Clear()
 //+------------------------------------------------------------------+
 //| 检查键是否存在                                                     |
 //+------------------------------------------------------------------+
-bool CConfig::HasKey(const string& key)
+bool CConfig::HasKey(const string key)
 {
    return (FindKey(key) >= 0);
 }
@@ -392,7 +394,7 @@ bool CConfig::HasKey(const string& key)
 //+------------------------------------------------------------------+
 //| 删除键                                                             |
 //+------------------------------------------------------------------+
-bool CConfig::RemoveKey(const string& key)
+bool CConfig::RemoveKey(const string key)
 {
    int index = FindKey(key);
    if(index < 0) return false;
@@ -411,7 +413,7 @@ bool CConfig::RemoveKey(const string& key)
 //+------------------------------------------------------------------+
 //| 获取第一个键                                                       |
 //+------------------------------------------------------------------+
-bool CConfig::GetFirstKey(string& key, string& value)
+bool CConfig::GetFirstKey(string key, string value)
 {
    if(m_count == 0) return false;
 
@@ -423,7 +425,7 @@ bool CConfig::GetFirstKey(string& key, string& value)
 //+------------------------------------------------------------------+
 //| 获取下一个键                                                       |
 //+------------------------------------------------------------------+
-bool CConfig::GetNextKey(string& key, string& value)
+bool CConfig::GetNextKey(string key, string value)
 {
    static int currentIndex = 0;
 

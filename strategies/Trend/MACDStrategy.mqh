@@ -37,7 +37,7 @@ private:
 public:
    //--- 构造函数/析构函数
    CMACDStrategy();
-   CMACDStrategy(const string& symbol, int timeFrame, int magic);
+   CMACDStrategy(const string symbol, int timeFrame, int magic);
    virtual ~CMACDStrategy();
 
    //--- 重写基类方法
@@ -61,7 +61,7 @@ CMACDStrategy::CMACDStrategy() :
 //+------------------------------------------------------------------+
 //| 带参数构造函数                                                     |
 //+------------------------------------------------------------------+
-CMACDStrategy::CMACDStrategy(const string& symbol, int timeFrame, int magic) :
+CMACDStrategy::CMACDStrategy(const string symbol, int timeFrame, int magic) :
    CSignalGenerator(symbol, timeFrame, magic),
    m_macdHandle(INVALID_HANDLE)
 {

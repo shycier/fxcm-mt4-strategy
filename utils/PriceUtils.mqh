@@ -14,28 +14,28 @@
 //+------------------------------------------------------------------+
 
 //--- 获取当前买价
-double GetBid(const string& symbol = "")
+double GetBid(const string symbol = "")
 {
    if(symbol == "") return Bid;
    return MarketInfo(symbol, MODE_BID);
 }
 
 //--- 获取当前卖价
-double GetAsk(const string& symbol = "")
+double GetAsk(const string symbol = "")
 {
    if(symbol == "") return Ask;
    return MarketInfo(symbol, MODE_ASK);
 }
 
 //--- 获取点差
-double GetSpread(const string& symbol = "")
+double GetSpread(const string symbol = "")
 {
    if(symbol == "") symbol = Symbol();
    return MarketInfo(symbol, MODE_SPREAD);
 }
 
 //--- 获取点差(以点为单位)
-double GetSpreadInPips(const string& symbol = "")
+double GetSpreadInPips(const string symbol = "")
 {
    if(symbol == "") symbol = Symbol();
    double spread = MarketInfo(symbol, MODE_SPREAD);
@@ -50,7 +50,7 @@ double GetSpreadInPips(const string& symbol = "")
 }
 
 //--- 标准化价格
-double NormalizePrice(double price, const string& symbol = "")
+double NormalizePrice(double price, const string symbol = "")
 {
    if(symbol == "") symbol = Symbol();
    int digits = (int)MarketInfo(symbol, MODE_DIGITS);
@@ -58,7 +58,7 @@ double NormalizePrice(double price, const string& symbol = "")
 }
 
 //--- 标准化手数
-double NormalizeLots(double lots, const string& symbol = "")
+double NormalizeLots(double lots, const string symbol = "")
 {
    if(symbol == "") symbol = Symbol();
 
@@ -78,7 +78,7 @@ double NormalizeLots(double lots, const string& symbol = "")
 }
 
 //--- 点转换为价格
-double PipsToPrice(double pips, const string& symbol = "")
+double PipsToPrice(double pips, const string symbol = "")
 {
    if(symbol == "") symbol = Symbol();
    double point = MarketInfo(symbol, MODE_POINT);
@@ -92,7 +92,7 @@ double PipsToPrice(double pips, const string& symbol = "")
 }
 
 //--- 价格转换为点
-double PriceToPips(double price, const string& symbol = "")
+double PriceToPips(double price, const string symbol = "")
 {
    if(symbol == "") symbol = Symbol();
    double point = MarketInfo(symbol, MODE_POINT);
@@ -106,7 +106,7 @@ double PriceToPips(double price, const string& symbol = "")
 }
 
 //--- 计算止损价格
-double CalculateStopLoss(int orderType, double entryPrice, double slPips, const string& symbol = "")
+double CalculateStopLoss(int orderType, double entryPrice, double slPips, const string symbol = "")
 {
    if(symbol == "") symbol = Symbol();
 
@@ -119,7 +119,7 @@ double CalculateStopLoss(int orderType, double entryPrice, double slPips, const 
 }
 
 //--- 计算止盈价格
-double CalculateTakeProfit(int orderType, double entryPrice, double tpPips, const string& symbol = "")
+double CalculateTakeProfit(int orderType, double entryPrice, double tpPips, const string symbol = "")
 {
    if(symbol == "") symbol = Symbol();
 
@@ -132,7 +132,7 @@ double CalculateTakeProfit(int orderType, double entryPrice, double tpPips, cons
 }
 
 //--- 获取每点价值
-double GetPipValue(const string& symbol = "", double lots = 1.0)
+double GetPipValue(const string symbol = "", double lots = 1.0)
 {
    if(symbol == "") symbol = Symbol();
 
@@ -160,14 +160,14 @@ double GetPipValue(const string& symbol = "", double lots = 1.0)
 }
 
 //--- 获取保证金要求
-double GetMarginRequired(double lots, const string& symbol = "")
+double GetMarginRequired(double lots, const string symbol = "")
 {
    if(symbol == "") symbol = Symbol();
    return MarketInfo(symbol, MODE_MARGINREQUIRED) * lots;
 }
 
 //--- 计算盈亏
-double CalculateProfit(int orderType, double openPrice, double closePrice, double lots, const string& symbol = "")
+double CalculateProfit(int orderType, double openPrice, double closePrice, double lots, const string symbol = "")
 {
    if(symbol == "") symbol = Symbol();
 
@@ -195,7 +195,7 @@ bool IsPriceInRange(double price, double lower, double upper)
 }
 
 //--- 获取日内最高价
-double GetDailyHigh(const string& symbol = "")
+double GetDailyHigh(const string symbol = "")
 {
    if(symbol == "") symbol = Symbol();
 
@@ -209,7 +209,7 @@ double GetDailyHigh(const string& symbol = "")
 }
 
 //--- 获取日内最低价
-double GetDailyLow(const string& symbol = "")
+double GetDailyLow(const string symbol = "")
 {
    if(symbol == "") symbol = Symbol();
 
@@ -223,13 +223,13 @@ double GetDailyLow(const string& symbol = "")
 }
 
 //--- 计算日内波动幅度
-double GetDailyRange(const string& symbol = "")
+double GetDailyRange(const string symbol = "")
 {
    return GetDailyHigh(symbol) - GetDailyLow(symbol);
 }
 
 //--- 计算平均真实波幅
-double GetATR(const string& symbol, int period, int timeFrame = PERIOD_H1)
+double GetATR(const string symbol, int period, int timeFrame = PERIOD_H1)
 {
    double high[], low[], close[];
    ArraySetAsSeries(high, true);
@@ -258,7 +258,7 @@ double GetATR(const string& symbol, int period, int timeFrame = PERIOD_H1)
 }
 
 //--- 获取支撑位（基于前期低点）
-double FindSupportLevel(const string& symbol, int lookback = 20, int timeFrame = PERIOD_H1)
+double FindSupportLevel(const string symbol, int lookback = 20, int timeFrame = PERIOD_H1)
 {
    double low[];
    ArraySetAsSeries(low, true);
@@ -276,7 +276,7 @@ double FindSupportLevel(const string& symbol, int lookback = 20, int timeFrame =
 }
 
 //--- 获取阻力位（基于前期高点）
-double FindResistanceLevel(const string& symbol, int lookback = 20, int timeFrame = PERIOD_H1)
+double FindResistanceLevel(const string symbol, int lookback = 20, int timeFrame = PERIOD_H1)
 {
    double high[];
    ArraySetAsSeries(high, true);

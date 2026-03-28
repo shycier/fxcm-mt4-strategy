@@ -48,10 +48,10 @@ private:
 public:
    //--- 构造函数
    CStopLossManager();
-   CStopLossManager(const string& symbol, int timeFrame);
+   CStopLossManager(const string symbol, int timeFrame);
 
    //--- 配置方法
-   void          SetSymbol(const string& symbol) { m_symbol = symbol; }
+   void          SetSymbol(const string symbol) { m_symbol = symbol; }
    void          SetTimeFrame(int tf) { m_timeFrame = tf; }
    void          SetStopLossType(StopLossType type) { m_slType = type; }
 
@@ -99,7 +99,7 @@ CStopLossManager::CStopLossManager() :
 //+------------------------------------------------------------------+
 //| 带参数构造函数                                                     |
 //+------------------------------------------------------------------+
-CStopLossManager::CStopLossManager(const string& symbol, int timeFrame) :
+CStopLossManager::CStopLossManager(const string symbol, int timeFrame) :
    m_symbol(symbol),
    m_timeFrame(timeFrame),
    m_slType(SL_FIXED),

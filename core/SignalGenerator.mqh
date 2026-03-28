@@ -42,7 +42,7 @@ protected:
 public:
    //--- 构造函数/析构函数
    CSignalGenerator();
-   CSignalGenerator(const string& symbol, int timeFrame, int magic);
+   CSignalGenerator(const string symbol, int timeFrame, int magic);
    virtual ~CSignalGenerator();
 
    //--- 初始化方法
@@ -50,10 +50,10 @@ public:
    virtual void   Deinit() { m_initialized = false; }
 
    //--- 设置方法
-   void           SetSymbol(const string& symbol) { m_symbol = symbol; }
+   void           SetSymbol(const string symbol) { m_symbol = symbol; }
    void           SetTimeFrame(int tf) { m_timeFrame = tf; }
    void           SetMagic(int magic) { m_magic = magic; }
-   void           SetParams(const StrategyParams& params) { m_params = params; }
+   void           SetParams(const StrategyParams params) { m_params = params; }
 
    //--- 获取方法
    string         GetSymbol() const { return m_symbol; }
@@ -66,7 +66,7 @@ public:
    virtual string GetStrategyName() { return "Base"; }
 
    //--- 信号验证
-   bool           ValidateSignal(TradeSignal& signal);
+   bool           ValidateSignal(TradeSignal &signal);
 };
 
 //+------------------------------------------------------------------+
@@ -88,7 +88,7 @@ CSignalGenerator::CSignalGenerator() :
 //+------------------------------------------------------------------+
 //| 带参数构造函数                                                     |
 //+------------------------------------------------------------------+
-CSignalGenerator::CSignalGenerator(const string& symbol, int timeFrame, int magic) :
+CSignalGenerator::CSignalGenerator(const string symbol, int timeFrame, int magic) :
    m_symbol(symbol),
    m_timeFrame(timeFrame),
    m_magic(magic),
@@ -207,7 +207,7 @@ int CSignalGenerator::GenerateSignal(double& sl, double& tp)
 //+------------------------------------------------------------------+
 //| 验证信号                                                           |
 //+------------------------------------------------------------------+
-bool CSignalGenerator::ValidateSignal(TradeSignal& signal)
+bool CSignalGenerator::ValidateSignal(TradeSignal &signal)
 {
    //--- 检查信号类型
    if(signal.type != SIGNAL_BUY && signal.type != SIGNAL_SELL)

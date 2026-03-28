@@ -20,30 +20,30 @@ private:
    RiskParams m_riskParams;     // 风险参数
 
    //--- 私有方法
-   double     GetPipValue(const string& symbol);
+   double     GetPipValue(const string symbol);
 
 public:
    //--- 构造函数
    CPositionSizer();
-   CPositionSizer(const RiskParams& params);
+   CPositionSizer(const RiskParams params);
 
    //--- 设置风险参数
-   void       SetRiskParams(const RiskParams& params) { m_riskParams = params; }
+   void       SetRiskParams(const RiskParams params) { m_riskParams = params; }
    void       SetRiskPercent(double percent);
    void       SetMinMaxLots(double minLot, double maxLot);
 
    //--- 计算仓位大小
-   double     CalculateLotSize(double riskPercent, double stopLossPips, const string& symbol = "");
-   double     CalculateLotSizeByAmount(double riskAmount, double stopLossPips, const string& symbol = "");
-   double     CalculateLotSizeByATR(double riskPercent, int atrPeriod, int atrMultiplier, const string& symbol = "", int timeFrame = PERIOD_H1);
+   double     CalculateLotSize(double riskPercent, double stopLossPips, const string symbol = "");
+   double     CalculateLotSizeByAmount(double riskAmount, double stopLossPips, const string symbol = "");
+   double     CalculateLotSizeByATR(double riskPercent, int atrPeriod, int atrMultiplier, const string symbol = "", int timeFrame = PERIOD_H1);
 
    //--- 辅助计算
    double     CalculateRiskAmount(double accountBalance, double riskPercent);
-   double     CalculateStopLossValue(double lots, double stopLossPips, const string& symbol = "");
+   double     CalculateStopLossValue(double lots, double stopLossPips, const string symbol = "");
 
    //--- 验证
-   bool       ValidateLotSize(double& lots, const string& symbol = "");
-   double     GetMaxAllowedLots(const string& symbol = "");
+   bool       ValidateLotSize(double& lots, const string symbol = "");
+   double     GetMaxAllowedLots(const string symbol = "");
 };
 
 //+------------------------------------------------------------------+
@@ -62,7 +62,7 @@ CPositionSizer::CPositionSizer()
 //+------------------------------------------------------------------+
 //| 带参数构造函数                                                     |
 //+------------------------------------------------------------------+
-CPositionSizer::CPositionSizer(const RiskParams& params) : m_riskParams(params)
+CPositionSizer::CPositionSizer(const RiskParams params) : m_riskParams(params)
 {
 }
 
@@ -88,7 +88,7 @@ void CPositionSizer::SetMinMaxLots(double minLot, double maxLot)
 //+------------------------------------------------------------------+
 //| 获取点值                                                           |
 //+------------------------------------------------------------------+
-double CPositionSizer::GetPipValue(const string& symbol)
+double CPositionSizer::GetPipValue(const string symbol)
 {
    string sym = (symbol == "") ? Symbol() : symbol;
 
@@ -114,7 +114,7 @@ double CPositionSizer::GetPipValue(const string& symbol)
 //+------------------------------------------------------------------+
 //| 根据风险百分比计算仓位                                             |
 //+------------------------------------------------------------------+
-double CPositionSizer::CalculateLotSize(double riskPercent, double stopLossPips, const string& symbol)
+double CPositionSizer::CalculateLotSize(double riskPercent, double stopLossPips, const string symbol)
 {
    string sym = (symbol == "") ? Symbol() : symbol;
 
@@ -153,7 +153,7 @@ double CPositionSizer::CalculateLotSize(double riskPercent, double stopLossPips,
 //+------------------------------------------------------------------+
 //| 根据固定金额计算仓位                                               |
 //+------------------------------------------------------------------+
-double CPositionSizer::CalculateLotSizeByAmount(double riskAmount, double stopLossPips, const string& symbol)
+double CPositionSizer::CalculateLotSizeByAmount(double riskAmount, double stopLossPips, const string symbol)
 {
    string sym = (symbol == "") ? Symbol() : symbol;
 
@@ -178,7 +178,7 @@ double CPositionSizer::CalculateLotSizeByAmount(double riskAmount, double stopLo
 //| 根据ATR计算仓位                                                   |
 //+------------------------------------------------------------------+
 double CPositionSizer::CalculateLotSizeByATR(double riskPercent, int atrPeriod, int atrMultiplier,
-                                             const string& symbol, int timeFrame)
+                                             const string symbol, int timeFrame)
 {
    string sym = (symbol == "") ? Symbol() : symbol;
 
@@ -232,7 +232,7 @@ double CPositionSizer::CalculateRiskAmount(double accountBalance, double riskPer
 //+------------------------------------------------------------------+
 //| 计算止损价值                                                       |
 //+------------------------------------------------------------------+
-double CPositionSizer::CalculateStopLossValue(double lots, double stopLossPips, const string& symbol)
+double CPositionSizer::CalculateStopLossValue(double lots, double stopLossPips, const string symbol)
 {
    string sym = (symbol == "") ? Symbol() : symbol;
    double pipValue = GetPipValue(sym);
@@ -242,7 +242,7 @@ double CPositionSizer::CalculateStopLossValue(double lots, double stopLossPips, 
 //+------------------------------------------------------------------+
 //| 验证仓位大小                                                       |
 //+------------------------------------------------------------------+
-bool CPositionSizer::ValidateLotSize(double& lots, const string& symbol)
+bool CPositionSizer::ValidateLotSize(double& lots, const string symbol)
 {
    string sym = (symbol == "") ? Symbol() : symbol;
 
@@ -296,7 +296,7 @@ bool CPositionSizer::ValidateLotSize(double& lots, const string& symbol)
 //+------------------------------------------------------------------+
 //| 获取允许的最大仓位                                                 |
 //+------------------------------------------------------------------+
-double CPositionSizer::GetMaxAllowedLots(const string& symbol)
+double CPositionSizer::GetMaxAllowedLots(const string symbol)
 {
    string sym = (symbol == "") ? Symbol() : symbol;
 

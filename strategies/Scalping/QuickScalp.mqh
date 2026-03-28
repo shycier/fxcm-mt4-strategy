@@ -44,7 +44,7 @@ private:
 public:
    //--- 构造函数/析构函数
    CQuickScalp();
-   CQuickScalp(const string& symbol, int timeFrame, int magic);
+   CQuickScalp(const string symbol, int timeFrame, int magic);
    virtual ~CQuickScalp();
 
    //--- 重写基类方法
@@ -73,7 +73,7 @@ CQuickScalp::CQuickScalp() :
 //+------------------------------------------------------------------+
 //| 带参数构造函数                                                     |
 //+------------------------------------------------------------------+
-CQuickScalp::CQuickScalp(const string& symbol, int timeFrame, int magic) :
+CQuickScalp::CQuickScalp(const string symbol, int timeFrame, int magic) :
    CSignalGenerator(symbol, timeFrame, magic),
    m_fastMAHandle(INVALID_HANDLE),
    m_slowMAHandle(INVALID_HANDLE),

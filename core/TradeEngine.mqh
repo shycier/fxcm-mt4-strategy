@@ -49,7 +49,7 @@ private:
 public:
    //--- 构造函数/析构函数
    CTradeEngine();
-   CTradeEngine(const string& symbol, int timeFrame, int magic);
+   CTradeEngine(const string symbol, int timeFrame, int magic);
    ~CTradeEngine();
 
    //--- 初始化
@@ -57,10 +57,10 @@ public:
    void              Deinit();
 
    //--- 配置方法
-   void              SetSymbol(const string& symbol);
+   void              SetSymbol(const string symbol);
    void              SetTimeFrame(int tf) { m_timeFrame = tf; }
    void              SetMagic(int magic) { m_magic = magic; }
-   void              SetRiskParams(const RiskParams& params) { m_riskParams = params; }
+   void              SetRiskParams(const RiskParams params) { m_riskParams = params; }
    void              SetEnabled(bool enabled) { m_enabled = enabled; }
    void              SetTrailingStop(bool enabled, int startPips, int stepPips);
 
@@ -105,7 +105,7 @@ CTradeEngine::CTradeEngine() :
 //+------------------------------------------------------------------+
 //| 带参数构造函数                                                     |
 //+------------------------------------------------------------------+
-CTradeEngine::CTradeEngine(const string& symbol, int timeFrame, int magic) :
+CTradeEngine::CTradeEngine(const string symbol, int timeFrame, int magic) :
    m_strategy(NULL),
    m_orderManager(NULL),
    m_positionSizer(NULL),
@@ -133,7 +133,7 @@ CTradeEngine::~CTradeEngine()
 //+------------------------------------------------------------------+
 //| 设置交易品种                                                       |
 //+------------------------------------------------------------------+
-void CTradeEngine::SetSymbol(const string& symbol)
+void CTradeEngine::SetSymbol(const string symbol)
 {
    m_symbol = symbol;
    if(m_orderManager) m_orderManager->SetSymbol(symbol);

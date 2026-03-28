@@ -38,7 +38,7 @@ private:
 public:
    //--- 构造函数/析构函数
    CChannelBreakout();
-   CChannelBreakout(const string& symbol, int timeFrame, int magic);
+   CChannelBreakout(const string symbol, int timeFrame, int magic);
    virtual ~CChannelBreakout();
 
    //--- 重写基类方法
@@ -66,7 +66,7 @@ CChannelBreakout::CChannelBreakout() :
 //+------------------------------------------------------------------+
 //| 带参数构造函数                                                     |
 //+------------------------------------------------------------------+
-CChannelBreakout::CChannelBreakout(const string& symbol, int timeFrame, int magic) :
+CChannelBreakout::CChannelBreakout(const string symbol, int timeFrame, int magic) :
    CSignalGenerator(symbol, timeFrame, magic),
    m_channelHigh(0),
    m_channelLow(0),

@@ -32,24 +32,24 @@ private:
 
    //--- 私有方法
    int      ExecuteWithRetry(int cmd, double volume, double price,
-                            double sl, double tp, const string& comment);
+                            double sl, double tp, const string comment);
    void     UpdateStats(double profit);
    int      GetLastErrorCode();
 
 public:
    //--- 构造函数
    COrderManager();
-   COrderManager(const string& symbol, int magic, int slippage = MAX_SLIPPAGE);
+   COrderManager(const string symbol, int magic, int slippage = MAX_SLIPPAGE);
 
    //--- 配置方法
-   void     SetSymbol(const string& symbol) { m_symbol = symbol; }
+   void     SetSymbol(const string symbol) { m_symbol = symbol; }
    void     SetMagic(int magic) { m_magic = magic; }
    void     SetSlippage(int slippage) { m_slippage = slippage; }
    void     SetMaxRetries(int retries) { m_maxRetries = retries; }
 
    //--- 订单操作
-   int      OpenBuy(double lots, double sl, double tp, const string& comment = "");
-   int      OpenSell(double lots, double sl, double tp, const string& comment = "");
+   int      OpenBuy(double lots, double sl, double tp, const string comment = "");
+   int      OpenSell(double lots, double sl, double tp, const string comment = "");
    bool     CloseOrder(int ticket, double lots = 0);
    bool     CloseAllOrders(int orderType = -1); // -1 = all types
    bool     ModifyOrder(int ticket, double sl, double tp, double price = 0);
@@ -57,7 +57,7 @@ public:
    //--- 订单查询
    int      GetOpenOrdersCount(int orderType = -1);
    int      GetOrdersByMagic(int magic);
-   bool     GetOrderInfo(int ticket, OrderInfo& info);
+   bool     GetOrderInfo(int ticket, OrderInfo &info);
    int      FindOrderByMagic(int magic);
    bool     HasOpenPosition();
 
@@ -93,7 +93,7 @@ COrderManager::COrderManager() :
 //+------------------------------------------------------------------+
 //| 带参数构造函数                                                     |
 //+------------------------------------------------------------------+
-COrderManager::COrderManager(const string& symbol, int magic, int slippage) :
+COrderManager::COrderManager(const string symbol, int magic, int slippage) :
    m_symbol(symbol),
    m_magic(magic),
    m_slippage(slippage),
@@ -111,7 +111,7 @@ COrderManager::COrderManager(const string& symbol, int magic, int slippage) :
 //| 执行交易并重试                                                     |
 //+------------------------------------------------------------------+
 int COrderManager::ExecuteWithRetry(int cmd, double volume, double price,
-                                    double sl, double tp, const string& comment)
+                                    double sl, double tp, const string comment)
 {
    int ticket = -1;
    int attempts = 0;
@@ -162,7 +162,7 @@ int COrderManager::ExecuteWithRetry(int cmd, double volume, double price,
 //+------------------------------------------------------------------+
 //| 开多仓                                                             |
 //+------------------------------------------------------------------+
-int COrderManager::OpenBuy(double lots, double sl, double tp, const string& comment)
+int COrderManager::OpenBuy(double lots, double sl, double tp, const string comment)
 {
    if(!IsConnected() || !IsTradeAllowed())
    {
@@ -186,7 +186,7 @@ int COrderManager::OpenBuy(double lots, double sl, double tp, const string& comm
 //+------------------------------------------------------------------+
 //| 开空仓                                                             |
 //+------------------------------------------------------------------+
-int COrderManager::OpenSell(double lots, double sl, double tp, const string& comment)
+int COrderManager::OpenSell(double lots, double sl, double tp, const string comment)
 {
    if(!IsConnected() || !IsTradeAllowed())
    {
@@ -358,7 +358,7 @@ int COrderManager::GetOrdersByMagic(int magic)
 //+------------------------------------------------------------------+
 //| 获取订单信息                                                       |
 //+------------------------------------------------------------------+
-bool COrderManager::GetOrderInfo(int ticket, OrderInfo& info)
+bool COrderManager::GetOrderInfo(int ticket, OrderInfo &info)
 {
    if(!OrderSelect(ticket, SELECT_BY_TICKET))
       return false;

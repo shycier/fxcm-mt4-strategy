@@ -95,6 +95,15 @@ void CMACDStrategy::Deinit()
 //+------------------------------------------------------------------+
 bool CMACDStrategy::GetMACDValues(int shift, double& main, double& signal)
 {
+   //--- 检查是否有足够的数据
+   int requiredBars = MACD_Slow + MACD_Signal + shift + 1;
+   if(Bars(m_symbol, m_timeFrame) < requiredBars)
+   {
+      main = 0;
+      signal = 0;
+      return false;
+   }
+
    //--- MT4风格:直接调用iMACD函数
    main = iMACD(m_symbol, m_timeFrame, MACD_Fast, MACD_Slow, MACD_Signal, MACD_AppliedPrice, MODE_MAIN, shift);
    signal = iMACD(m_symbol, m_timeFrame, MACD_Fast, MACD_Slow, MACD_Signal, MACD_AppliedPrice, MODE_SIGNAL, shift);

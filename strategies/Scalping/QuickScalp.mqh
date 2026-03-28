@@ -136,6 +136,10 @@ bool CQuickScalp::CheckTradeInterval()
 //+------------------------------------------------------------------+
 double CQuickScalp::GetMAValue(int period, int shift)
 {
+   //--- 检查是否有足够的数据
+   if(Bars(m_symbol, m_timeFrame) < period + shift + 1)
+      return 0;
+
    //--- MT4风格:直接调用iMA函数返回MA值
    return iMA(m_symbol, m_timeFrame, period, 0, MODE_EMA, PRICE_CLOSE, shift);
 }
@@ -145,6 +149,10 @@ double CQuickScalp::GetMAValue(int period, int shift)
 //+------------------------------------------------------------------+
 double CQuickScalp::GetRSIValue(int shift)
 {
+   //--- 检查是否有足够的数据
+   if(Bars(m_symbol, m_timeFrame) < QS_RSI_Period + shift + 1)
+      return 50;
+
    //--- MT4风格:直接调用iRSI函数返回RSI值
    return iRSI(m_symbol, m_timeFrame, QS_RSI_Period, PRICE_CLOSE, shift);
 }

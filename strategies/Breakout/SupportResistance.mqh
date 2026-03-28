@@ -107,18 +107,41 @@ void CSupportResistance::Deinit()
 //+------------------------------------------------------------------+
 void CSupportResistance::FindLevels()
 {
+   //--- 检查是否有足够的数据
+   if(Bars(m_symbol, m_timeFrame) < SR_Lookback + 1)
+   {
+      m_resistanceLevel = 0;
+      m_supportLevel = 0;
+      return;
+   }
+
    double high[], low[], close[];
    ArraySetAsSeries(high, true);
    ArraySetAsSeries(low, true);
    ArraySetAsSeries(close, true);
 
-   if(CopyHigh(m_symbol, m_timeFrame, 0, SR_Lookback, high) <= 0) return;
-   if(CopyLow(m_symbol, m_timeFrame, 0, SR_Lookback, low) <= 0) return;
-   if(CopyClose(m_symbol, m_timeFrame, 0, SR_Lookback, close) <= 0) return;
+   int copiedHigh = CopyHigh(m_symbol, m_timeFrame, 0, SR_Lookback, high);
+   int copiedLow = CopyLow(m_symbol, m_timeFrame, 0, SR_Lookback, low);
+   int copiedClose = CopyClose(m_symbol, m_timeFrame, 0, SR_Lookback, close);
+
+   // 检查是否成功复制了足够的数据
+   if(copiedHigh < SR_Lookback || copiedLow < SR_Lookback || copiedClose < SR_Lookback)
+   {
+      m_resistanceLevel = 0;
+      m_supportLevel = 0;
+      return;
+   }
 
    //--- 找出最高和最低点
    int highestIdx = ArrayMaximum(high, 0, SR_Lookback);
    int lowestIdx = ArrayMinimum(low, 0, SR_Lookback);
+
+   if(highestIdx < 0 || highestIdx >= ArraySize(high) || lowestIdx < 0 || lowestIdx >= ArraySize(low))
+   {
+      m_resistanceLevel = 0;
+      m_supportLevel = 0;
+      return;
+   }
 
    m_resistanceLevel = high[highestIdx];
    m_supportLevel = low[lowestIdx];

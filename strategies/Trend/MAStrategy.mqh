@@ -99,6 +99,10 @@ void CMAStrategy::Deinit()
 //+------------------------------------------------------------------+
 double CMAStrategy::GetMAValue(int period, int shift)
 {
+   //--- 检查是否有足够的数据
+   if(Bars(m_symbol, m_timeFrame) < period + shift + 1)
+      return 0;
+
    //--- MT4风格:直接调用iMA函数返回MA值
    return iMA(m_symbol, m_timeFrame, period, 0, MA_Method, MA_AppliedPrice, shift);
 }

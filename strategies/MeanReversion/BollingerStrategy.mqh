@@ -94,6 +94,15 @@ void CBollingerStrategy::Deinit()
 //+------------------------------------------------------------------+
 bool CBollingerStrategy::GetBBValues(int shift, double& upper, double& middle, double& lower)
 {
+   //--- 检查是否有足够的数据
+   if(Bars(m_symbol, m_timeFrame) < BB_Period + shift + 1)
+   {
+      upper = 0;
+      middle = 0;
+      lower = 0;
+      return false;
+   }
+
    //--- MT4风格:直接调用iBands函数
    upper = iBands(m_symbol, m_timeFrame, BB_Period, BB_Deviation, 0, BB_AppliedPrice, MODE_UPPER, shift);
    middle = iBands(m_symbol, m_timeFrame, BB_Period, BB_Deviation, 0, BB_AppliedPrice, MODE_MAIN, shift);

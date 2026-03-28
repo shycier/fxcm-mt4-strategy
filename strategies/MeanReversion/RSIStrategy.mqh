@@ -99,6 +99,10 @@ void CRSIStrategy::Deinit()
 //+------------------------------------------------------------------+
 double CRSIStrategy::GetRSIValue(int shift)
 {
+   //--- 检查是否有足够的数据
+   if(Bars(m_symbol, m_timeFrame) < RSI_Period + shift + 1)
+      return 50;
+
    //--- MT4风格:直接调用iRSI函数返回RSI值
    double rsi = iRSI(m_symbol, m_timeFrame, RSI_Period, RSI_AppliedPrice, shift);
 

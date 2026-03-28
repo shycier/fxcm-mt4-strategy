@@ -99,7 +99,7 @@ int OnInit()
    g_tradeEngine->SetTrailingStop(MR_UseTrailing, MR_TrailStart, MR_TrailStep);
 
    //--- 配置交易状态
-   g_tradeEngine->SetEnabled(MR_EnableTrading);
+   (*g_tradeEngine).SetEnabled(MR_EnableTrading);
 
    //--- 初始化交易引擎
    if(!g_tradeEngine->Init(g_strategy))
@@ -182,7 +182,7 @@ void OnChartEvent(const int id,
          case 'C':
             if(g_tradeEngine != NULL)
             {
-               g_tradeEngine->CloseAllPositions();
+               (*g_tradeEngine).CloseAllPositions();
                Print("All positions closed by user");
             }
             break;
@@ -190,8 +190,8 @@ void OnChartEvent(const int id,
          case 'D':
             if(g_tradeEngine != NULL)
             {
-               bool enabled = !g_tradeEngine->IsEnabled();
-               g_tradeEngine->SetEnabled(enabled);
+               bool enabled = !(*g_tradeEngine).IsEnabled();
+               (*g_tradeEngine).SetEnabled(enabled);
                Print("Trading ", enabled ? "ENABLED" : "DISABLED");
             }
             break;

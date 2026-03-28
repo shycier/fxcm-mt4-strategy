@@ -14,7 +14,13 @@
       "Bash(git remote set-url origin https://shycier:z199106140558@github.com/shycier/fxcm-mt4-strategy.git)",
       "Bash(git remote set-url origin https://shycier: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@github.com/shycier/fxcm-mt4-strategy.git)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" https://github.com/shycier/fxcm-mt4-strategy)",
-      "Bash(git remote set-url origin https://shycier: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@github.com/shycier/fxcm-mt4-strategy.git)"
+      "Bash(git remote set-url origin https://shycier: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@github.com/shycier/fxcm-mt4-strategy.git)",
+      "Bash(sed -i '' 's/g_tradeEngine->IsEnabled\\(\\)/\\(*g_tradeEngine\\).IsEnabled\\(\\)/g' /Users/shycier/Desktop/mt4/experts/*.mq4)",
+      "Bash(sed -i '' 's/g_tradeEngine->SetEnabled/\\(*g_tradeEngine\\).SetEnabled/g' /Users/shycier/Desktop/mt4/experts/*.mq4)",
+      "Bash(sed -i '' 's/g_tradeEngine->CloseAllPositions/\\(*g_tradeEngine\\).CloseAllPositions/g' /Users/shycier/Desktop/mt4/experts/*.mq4)",
+      "Bash(git add:*)",
+      "Bash(git push:*)",
+      "Bash(xargs sed:*)"
     ]
   }
 }

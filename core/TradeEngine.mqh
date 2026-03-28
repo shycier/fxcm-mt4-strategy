@@ -137,7 +137,7 @@ CTradeEngine::~CTradeEngine()
 void CTradeEngine::SetSymbol(const string symbol)
 {
    m_symbol = symbol;
-   if(m_orderManager) m_orderManager->SetSymbol(symbol);
+   if(m_orderManager) m_orderManager.SetSymbol(symbol);
 }
 
 //+------------------------------------------------------------------+
@@ -188,7 +188,7 @@ bool CTradeEngine::Init(CSignalGenerator* strategy)
    }
 
    //--- 初始化策略
-   if(!m_strategy->Init())
+   if(!m_strategy.Init())
    {
       LOG_ERROR("Failed to initialize strategy");
       return false;
@@ -205,7 +205,7 @@ void CTradeEngine::Deinit()
 {
    if(m_strategy)
    {
-      m_strategy->Deinit();
+      m_strategy.Deinit();
       // 注意: 不删除策略指针,因为它可能由外部管理
       m_strategy = NULL;
    }
@@ -285,35 +285,35 @@ bool CTradeEngine::CheckRiskLimits()
    if(m_riskManager == NULL) return true;
 
    //--- 检查日亏损限制
-   if(!m_riskManager->CheckDailyLoss())
+   if(!m_riskManager.CheckDailyLoss())
    {
       LOG_WARNING("Daily loss limit reached");
       return false;
    }
 
    //--- 检查周亏损限制
-   if(!m_riskManager->CheckWeeklyLoss())
+   if(!m_riskManager.CheckWeeklyLoss())
    {
       LOG_WARNING("Weekly loss limit reached");
       return false;
    }
 
    //--- 检查最大回撤
-   if(!m_riskManager->CheckDrawdown())
+   if(!m_riskManager.CheckDrawdown())
    {
       LOG_WARNING("Max drawdown reached");
       return false;
    }
 
    //--- 检查日交易次数
-   if(!m_riskManager->CheckDailyTrades())
+   if(!m_riskManager.CheckDailyTrades())
    {
       LOG_WARNING("Daily trade limit reached");
       return false;
    }
 
    //--- 检查最大持仓数
-   if(!m_riskManager->CheckMaxPositions(m_orderManager->GetOpenOrdersCount()))
+   if(!m_riskManager.CheckMaxPositions(m_orderManager.GetOpenOrdersCount()))
    {
       LOG_WARNING("Max positions reached");
       return false;
@@ -353,7 +353,7 @@ void CTradeEngine::ProcessSignal(int signal, double sl, double tp)
    double slPips = MathAbs(Bid - sl) / Point;
    if(signal == SIGNAL_SELL) slPips = MathAbs(Ask - sl) / Point;
 
-   double lots = m_positionSizer->CalculateLotSize(riskPercent, slPips, m_symbol);
+   double lots = m_positionSizer.CalculateLotSize(riskPercent, slPips, m_symbol);
 
    if(lots <= 0)
    {
@@ -365,17 +365,17 @@ void CTradeEngine::ProcessSignal(int signal, double sl, double tp)
    int ticket = -1;
    if(signal == SIGNAL_BUY)
    {
-      ticket = m_orderManager->OpenBuy(lots, sl, tp, "Auto");
+      ticket = m_orderManager.OpenBuy(lots, sl, tp, "Auto");
    }
    else if(signal == SIGNAL_SELL)
    {
-      ticket = m_orderManager->OpenSell(lots, sl, tp, "Auto");
+      ticket = m_orderManager.OpenSell(lots, sl, tp, "Auto");
    }
 
    if(ticket > 0)
    {
       m_lastTradeTime = TimeCurrent();
-      m_riskManager->IncrementDailyTrades();
+      m_riskManager.IncrementDailyTrades();
    }
 }
 
@@ -412,7 +412,7 @@ void CTradeEngine::UpdateTrailingStop()
 
             if(currentSL == 0 || newSL > currentSL)
             {
-               m_orderManager->ModifyOrder(OrderTicket(), newSL, OrderTakeProfit());
+               m_orderManager.ModifyOrder(OrderTicket(), newSL, OrderTakeProfit());
             }
          }
       }
@@ -426,7 +426,7 @@ void CTradeEngine::UpdateTrailingStop()
 
             if(currentSL == 0 || newSL < currentSL)
             {
-               m_orderManager->ModifyOrder(OrderTicket(), newSL, OrderTakeProfit());
+               m_orderManager.ModifyOrder(OrderTicket(), newSL, OrderTakeProfit());
             }
          }
       }
@@ -451,7 +451,7 @@ void CTradeEngine::OnTick()
    if(!CanTrade()) return;
 
    //--- 检查是否已有持仓
-   if(m_orderManager->HasOpenPosition())
+   if(m_orderManager.HasOpenPosition())
    {
       LOG_DEBUG("Already has open position");
       return;
@@ -459,7 +459,7 @@ void CTradeEngine::OnTick()
 
    //--- 生成信号
    double sl = 0, tp = 0;
-   int signal = m_strategy->GenerateSignal(sl, tp);
+   int signal = m_strategy.GenerateSignal(sl, tp);
 
    //--- 处理信号
    ProcessSignal(signal, sl, tp);
@@ -481,7 +481,7 @@ void CTradeEngine::CloseAllPositions()
 {
    if(m_orderManager)
    {
-      m_orderManager->CloseAllOrders();
+      m_orderManager.CloseAllOrders();
       LOG_INFO("All positions closed");
    }
 }
@@ -492,7 +492,7 @@ void CTradeEngine::CloseAllPositions()
 int CTradeEngine::GetOpenPositions()
 {
    if(m_orderManager)
-      return m_orderManager->GetOpenOrdersCount();
+      return m_orderManager.GetOpenOrdersCount();
    return 0;
 }
 

@@ -93,16 +93,16 @@ int OnInit()
    riskParams.maxDrawdown = TF_MaxDrawdown;
    riskParams.maxDailyTrades = TF_MaxDailyTrades;
    riskParams.maxPositions = TF_MaxPositions;
-   g_tradeEngine->SetRiskParams(riskParams);
+   g_tradeEngine.SetRiskParams(riskParams);
 
    //--- 配置移动止损
-   g_tradeEngine->SetTrailingStop(TF_UseTrailing, TF_TrailStart, TF_TrailStep);
+   g_tradeEngine.SetTrailingStop(TF_UseTrailing, TF_TrailStart, TF_TrailStep);
 
    //--- 配置交易状态
    (*g_tradeEngine).SetEnabled(TF_EnableTrading);
 
    //--- 初始化交易引擎
-   if(!g_tradeEngine->Init(g_strategy))
+   if(!g_tradeEngine.Init(g_strategy))
    {
       Print("Failed to initialize trade engine");
       delete g_tradeEngine;
@@ -115,7 +115,7 @@ int OnInit()
    Print("Trend Follower EA Initialized");
    Print("Symbol: ", symbol);
    Print("TimeFrame: ", EnumToString((ENUM_TIMEFRAMES)TF_TimeFrame));
-   Print("Strategy: ", g_strategy->GetStrategyName());
+   Print("Strategy: ", g_strategy.GetStrategyName());
    Print("Magic: ", TF_Magic);
    Print("Risk: ", TF_RiskPercent, "%");
    Print("========================================");
@@ -131,7 +131,7 @@ void OnDeinit(const int reason)
    //--- 清理
    if(g_tradeEngine != NULL)
    {
-      g_tradeEngine->Deinit();
+      g_tradeEngine.Deinit();
       delete g_tradeEngine;
       g_tradeEngine = NULL;
    }
@@ -153,7 +153,7 @@ void OnTick()
    if(g_tradeEngine == NULL) return;
 
    //--- 更新交易引擎
-   g_tradeEngine->OnTick();
+   g_tradeEngine.OnTick();
 }
 
 //+------------------------------------------------------------------+
@@ -163,7 +163,7 @@ void OnTimer()
 {
    if(g_tradeEngine == NULL) return;
 
-   g_tradeEngine->OnTimer();
+   g_tradeEngine.OnTimer();
 }
 
 //+------------------------------------------------------------------+

@@ -68,7 +68,7 @@ int OnInit()
    }
 
    //--- 设置剥头皮专用参数
-   g_strategy->SetMinTradeInterval(SC_MinTradeInterval);
+   g_strategy.SetMinTradeInterval(SC_MinTradeInterval);
 
    //--- 创建交易引擎
    g_tradeEngine = new CTradeEngine(symbol, SC_TimeFrame, SC_Magic);
@@ -87,16 +87,16 @@ int OnInit()
    riskParams.maxDrawdown = SC_MaxDrawdown;
    riskParams.maxDailyTrades = SC_MaxDailyTrades;
    riskParams.maxPositions = SC_MaxPositions;
-   g_tradeEngine->SetRiskParams(riskParams);
+   g_tradeEngine.SetRiskParams(riskParams);
 
    //--- 配置移动止损
-   g_tradeEngine->SetTrailingStop(SC_UseTrailing, SC_TrailStart, SC_TrailStep);
+   g_tradeEngine.SetTrailingStop(SC_UseTrailing, SC_TrailStart, SC_TrailStep);
 
    //--- 配置交易状态
    (*g_tradeEngine).SetEnabled(SC_EnableTrading);
 
    //--- 初始化交易引擎
-   if(!g_tradeEngine->Init(g_strategy))
+   if(!g_tradeEngine.Init(g_strategy))
    {
       Print("Failed to initialize trade engine");
       delete g_tradeEngine;
@@ -133,7 +133,7 @@ void OnDeinit(const int reason)
    //--- 清理
    if(g_tradeEngine != NULL)
    {
-      g_tradeEngine->Deinit();
+      g_tradeEngine.Deinit();
       delete g_tradeEngine;
       g_tradeEngine = NULL;
    }
@@ -168,7 +168,7 @@ void OnTick()
    }
 
    //--- 更新交易引擎
-   g_tradeEngine->OnTick();
+   g_tradeEngine.OnTick();
 }
 
 //+------------------------------------------------------------------+
@@ -178,7 +178,7 @@ void OnTimer()
 {
    if(g_tradeEngine == NULL) return;
 
-   g_tradeEngine->OnTimer();
+   g_tradeEngine.OnTimer();
 }
 
 //+------------------------------------------------------------------+
@@ -212,14 +212,14 @@ void OnChartEvent(const int id,
             break;
 
          case 'S': // S键 - 显示统计
-            if(g_tradeEngine != NULL && g_tradeEngine->GetOrderManager() != NULL)
+            if(g_tradeEngine != NULL && g_tradeEngine.GetOrderManager() != NULL)
             {
-               COrderManager* om = g_tradeEngine->GetOrderManager();
+               COrderManager* om = g_tradeEngine.GetOrderManager();
                Print("=== Scalper Statistics ===");
-               Print("Total Trades: ", om->GetTotalTrades());
-               Print("Win Rate: ", DoubleToString(om->GetWinRate(), 1), "%");
-               Print("Total P/L: ", DoubleToString(om->GetTotalProfit(), 2));
-               Print("Open Positions: ", g_tradeEngine->GetOpenPositions());
+               Print("Total Trades: ", om.GetTotalTrades());
+               Print("Win Rate: ", DoubleToString(om.GetWinRate(), 1), "%");
+               Print("Total P/L: ", DoubleToString(om.GetTotalProfit(), 2));
+               Print("Open Positions: ", g_tradeEngine.GetOpenPositions());
                Print("==========================");
             }
             break;

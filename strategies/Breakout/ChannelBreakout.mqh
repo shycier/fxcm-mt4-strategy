@@ -54,25 +54,26 @@ public:
 //+------------------------------------------------------------------+
 //| 默认构造函数                                                       |
 //+------------------------------------------------------------------+
-CChannelBreakout::CChannelBreakout() :
-   CSignalGenerator(),
-   m_channelHigh(0),
-   m_channelLow(0),
-   m_lastBreakTime(0),
-   m_breakCooldown(60)
+CChannelBreakout::CChannelBreakout()
 {
+   m_channelHigh = 0;
+   m_channelLow = 0;
+   m_lastBreakTime = 0;
+   m_breakCooldown = 60;
 }
 
 //+------------------------------------------------------------------+
 //| 带参数构造函数                                                     |
 //+------------------------------------------------------------------+
-CChannelBreakout::CChannelBreakout(const string symbol, int timeFrame, int magic) :
-   CSignalGenerator(symbol, timeFrame, magic),
-   m_channelHigh(0),
-   m_channelLow(0),
-   m_lastBreakTime(0),
-   m_breakCooldown(60)
+CChannelBreakout::CChannelBreakout(const string symbol, int timeFrame, int magic)
 {
+   m_symbol = symbol;
+   m_timeFrame = timeFrame;
+   m_magic = magic;
+   m_channelHigh = 0;
+   m_channelLow = 0;
+   m_lastBreakTime = 0;
+   m_breakCooldown = 60;
 }
 
 //+------------------------------------------------------------------+
@@ -114,8 +115,14 @@ void CChannelBreakout::CalculateChannel()
    ArraySetAsSeries(low, true);
 
    // 从第1根K线开始(跳过当前K线)
-   if(CopyHigh(m_symbol, m_timeFrame, 1, CB_ChannelPeriod, high) <= 0) return;
-   if(CopyLow(m_symbol, m_timeFrame, 1, CB_ChannelPeriod, low) <= 0) return;
+   int copiedHigh = CopyHigh(m_symbol, m_timeFrame, 1, CB_ChannelPeriod, high);
+   int copiedLow = CopyLow(m_symbol, m_timeFrame, 1, CB_ChannelPeriod, low);
+
+   // 检查是否成功复制了足够的数据
+   if(copiedHigh < CB_ChannelPeriod || copiedLow < CB_ChannelPeriod) return;
+
+   // 检查数组大小
+   if(ArraySize(high) < CB_ChannelPeriod || ArraySize(low) < CB_ChannelPeriod) return;
 
    m_channelHigh = high[ArrayMaximum(high, 0, CB_ChannelPeriod)];
    m_channelLow = low[ArrayMinimum(low, 0, CB_ChannelPeriod)];

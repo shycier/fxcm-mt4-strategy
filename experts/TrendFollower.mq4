@@ -99,7 +99,7 @@ int OnInit()
    g_tradeEngine.SetTrailingStop(TF_UseTrailing, TF_TrailStart, TF_TrailStep);
 
    //--- 配置交易状态
-   (*g_tradeEngine).SetEnabled(TF_EnableTrading);
+   g_tradeEngine.SetEnabled(TF_EnableTrading);
 
    //--- 初始化交易引擎
    if(!g_tradeEngine.Init(g_strategy))
@@ -183,7 +183,7 @@ void OnChartEvent(const int id,
          case 'C': // C键 - 平掉所有仓位
             if(g_tradeEngine != NULL)
             {
-               (*g_tradeEngine).CloseAllPositions();
+               g_tradeEngine.CloseAllPositions();
                Print("All positions closed by user");
             }
             break;
@@ -191,8 +191,8 @@ void OnChartEvent(const int id,
          case 'D': // D键 - 禁用/启用交易
             if(g_tradeEngine != NULL)
             {
-               bool enabled = !(*g_tradeEngine).IsEnabled();
-               (*g_tradeEngine).SetEnabled(enabled);
+               bool enabled = !g_tradeEngine.IsEnabled();
+               g_tradeEngine.SetEnabled(enabled);
                Print("Trading ", enabled ? "ENABLED" : "DISABLED");
             }
             break;

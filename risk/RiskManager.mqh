@@ -117,20 +117,21 @@ CRiskManager::CRiskManager() :
 //+------------------------------------------------------------------+
 //| 带参数构造函数                                                     |
 //+------------------------------------------------------------------+
-CRiskManager::CRiskManager(RiskParams &params) :
-   m_riskParams(params),
-   m_startBalance(0),
-   m_weeklyStartBalance(0),
-   m_peakEquity(0),
-   m_currentDrawdown(0),
-   m_dailyTrades(0),
-   m_dailyWins(0),
-   m_dailyLosses(0),
-   m_dailyPL(0),
-   m_weeklyPL(0),
-   m_lastTradeDay(0),
-   m_lastTradeWeek(0)
+CRiskManager::CRiskManager(RiskParams &params)
 {
+   m_riskParams = params;
+   m_startBalance = 0;
+   m_weeklyStartBalance = 0;
+   m_peakEquity = 0;
+   m_currentDrawdown = 0;
+   m_dailyTrades = 0;
+   m_dailyWins = 0;
+   m_dailyLosses = 0;
+   m_dailyPL = 0;
+   m_weeklyPL = 0;
+   m_lastTradeDay = 0;
+   m_lastTradeWeek = 0;
+
    m_startBalance = AccountBalance();
    m_weeklyStartBalance = m_startBalance;
    m_peakEquity = AccountEquity();

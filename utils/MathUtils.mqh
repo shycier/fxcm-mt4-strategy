@@ -191,14 +191,6 @@ double Lerp(double a, double b, double t)
    return a + (b - a) * t;
 }
 
-//--- 限制范围
-double Clamp(double value, double min, double max)
-{
-   if(value < min) return min;
-   if(value > max) return max;
-   return value;
-}
-
 //--- 平滑过渡
 double SmoothStep(double edge0, double edge1, double x)
 {

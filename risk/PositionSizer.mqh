@@ -62,8 +62,9 @@ CPositionSizer::CPositionSizer()
 //+------------------------------------------------------------------+
 //| 带参数构造函数                                                     |
 //+------------------------------------------------------------------+
-CPositionSizer::CPositionSizer(RiskParams &params) : m_riskParams(params)
+CPositionSizer::CPositionSizer(RiskParams &params)
 {
+   m_riskParams = params;
 }
 
 //+------------------------------------------------------------------+

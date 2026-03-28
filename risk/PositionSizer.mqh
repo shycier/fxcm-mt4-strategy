@@ -25,10 +25,10 @@ private:
 public:
    //--- 构造函数
    CPositionSizer();
-   CPositionSizer(const RiskParams params);
+   CPositionSizer(RiskParams &params);
 
    //--- 设置风险参数
-   void       SetRiskParams(const RiskParams params) { m_riskParams = params; }
+   void       SetRiskParams(RiskParams &params) { m_riskParams = params; }
    void       SetRiskPercent(double percent);
    void       SetMinMaxLots(double minLot, double maxLot);
 
@@ -62,7 +62,7 @@ CPositionSizer::CPositionSizer()
 //+------------------------------------------------------------------+
 //| 带参数构造函数                                                     |
 //+------------------------------------------------------------------+
-CPositionSizer::CPositionSizer(const RiskParams params) : m_riskParams(params)
+CPositionSizer::CPositionSizer(RiskParams &params) : m_riskParams(params)
 {
 }
 

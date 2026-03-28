@@ -45,6 +45,7 @@ private:
    void              ProcessSignal(int signal, double sl, double tp);
    void              UpdateTrailingStop();
    bool              CanTrade();
+   bool              IsMarketOpen();
 
 public:
    //--- 构造函数/析构函数
@@ -60,7 +61,7 @@ public:
    void              SetSymbol(const string symbol);
    void              SetTimeFrame(int tf) { m_timeFrame = tf; }
    void              SetMagic(int magic) { m_magic = magic; }
-   void              SetRiskParams(const RiskParams params) { m_riskParams = params; }
+   void              SetRiskParams(RiskParams &params) { m_riskParams = params; }
    void              SetEnabled(bool enabled) { m_enabled = enabled; }
    void              SetTrailingStop(bool enabled, int startPips, int stepPips);
 
@@ -228,6 +229,16 @@ void CTradeEngine::Deinit()
    }
 
    LOG_INFO("Trade engine deinitialized");
+}
+
+//+------------------------------------------------------------------+
+//| 检查市场是否开放                                                   |
+//+------------------------------------------------------------------+
+bool CTradeEngine::IsMarketOpen()
+{
+   //--- 简单检查：是否有报价
+   double bid = MarketInfo(m_symbol, MODE_BID);
+   return (bid > 0);
 }
 
 //+------------------------------------------------------------------+

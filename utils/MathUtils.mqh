@@ -14,7 +14,7 @@
 //+------------------------------------------------------------------+
 
 //--- 计算简单移动平均
-double SMA(const double array[], int period, int shift = 0)
+double SMA(double &array[], int period, int shift = 0)
 {
    if(period <= 0 || ArraySize(array) < period + shift) return 0;
 
@@ -28,7 +28,7 @@ double SMA(const double array[], int period, int shift = 0)
 }
 
 //--- 计算指数移动平均
-double EMA(const double array[], int period, int shift = 0)
+double EMA(double &array[], int period, int shift = 0)
 {
    if(period <= 0 || ArraySize(array) < period + shift) return 0;
 
@@ -44,7 +44,7 @@ double EMA(const double array[], int period, int shift = 0)
 }
 
 //--- 计算标准差
-double StandardDeviation(const double array[], int period, int shift = 0)
+double StandardDeviation(double &array[], int period, int shift = 0)
 {
    if(period <= 0 || ArraySize(array) < period + shift) return 0;
 
@@ -92,7 +92,7 @@ double CalculateATR(const string symbol, int timeFrame, int period, int shift = 
 }
 
 //--- 计算RSI
-double CalculateRSI(const double array[], int period, int shift = 0)
+double CalculateRSI(double &array[], int period, int shift = 0)
 {
    if(period <= 0 || ArraySize(array) < period + shift + 1) return 50;
 
@@ -117,7 +117,7 @@ double CalculateRSI(const double array[], int period, int shift = 0)
 }
 
 //--- 计算MACD
-void CalculateMACD(const double array[], int fastPeriod, int slowPeriod, int signalPeriod,
+void CalculateMACD(double &array[], int fastPeriod, int slowPeriod, int signalPeriod,
                    double& macdLine, double& signalLine, double& histogram, int shift = 0)
 {
    double fastEMA = EMA(array, fastPeriod, shift);
@@ -142,7 +142,7 @@ void CalculateMACD(const double array[], int fastPeriod, int slowPeriod, int sig
 }
 
 //--- 计算布林带
-void CalculateBollingerBands(const double array[], int period, double deviation,
+void CalculateBollingerBands(double &array[], int period, double deviation,
                              double& middle, double& upper, double& lower, int shift = 0)
 {
    middle = SMA(array, period, shift);
@@ -207,7 +207,7 @@ double SmoothStep(double edge0, double edge1, double x)
 }
 
 //--- 计算相关系数
-double Correlation(const double array1[], const double array2[], int count)
+double Correlation(double &array1[], double &array2[], int count)
 {
    if(count <= 0 || ArraySize(array1) < count || ArraySize(array2) < count) return 0;
 

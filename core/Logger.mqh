@@ -9,6 +9,7 @@
 
 #include "../include/Constants.mqh"
 #include "../include/Types.mqh"
+#include "../include/Common.mqh"
 
 //+------------------------------------------------------------------+
 //| 日志管理类                                                         |

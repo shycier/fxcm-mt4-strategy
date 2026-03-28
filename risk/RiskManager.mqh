@@ -45,10 +45,10 @@ private:
 public:
    //--- 构造函数
    CRiskManager();
-   CRiskManager(const RiskParams params);
+   CRiskManager(RiskParams &params);
 
    //--- 设置参数
-   void            SetRiskParams(const RiskParams params) { m_riskParams = params; }
+   void            SetRiskParams(RiskParams &params) { m_riskParams = params; }
    void            SetMaxDailyLoss(double percent) { m_riskParams.maxDailyLoss = percent; }
    void            SetMaxWeeklyLoss(double percent) { m_riskParams.maxWeeklyLoss = percent; }
    void            SetMaxDrawdown(double percent) { m_riskParams.maxDrawdown = percent; }
@@ -117,7 +117,7 @@ CRiskManager::CRiskManager() :
 //+------------------------------------------------------------------+
 //| 带参数构造函数                                                     |
 //+------------------------------------------------------------------+
-CRiskManager::CRiskManager(const RiskParams params) :
+CRiskManager::CRiskManager(RiskParams &params) :
    m_riskParams(params),
    m_startBalance(0),
    m_weeklyStartBalance(0),
@@ -215,8 +215,8 @@ bool CRiskManager::IsNewDay()
 bool CRiskManager::IsNewWeek()
 {
    datetime current = TimeCurrent();
-   int currentWeek = TimeToStruct(current).mon * 100 + TimeToStruct(current).day / 7;
-   int lastWeek = TimeToStruct(m_lastTradeWeek).mon * 100 + TimeToStruct(m_lastTradeWeek).day / 7;
+   int currentWeek = TimeMonth(current) * 100 + TimeDay(current) / 7;
+   int lastWeek = TimeMonth(m_lastTradeWeek) * 100 + TimeDay(m_lastTradeWeek) / 7;
 
    return (currentWeek != lastWeek);
 }

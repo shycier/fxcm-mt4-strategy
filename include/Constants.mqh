@@ -80,7 +80,7 @@
 //--- 无效值
 #define INVALID_HANDLE        -1     // 无效句柄
 #define INVALID_PRICE         0.0    // 无效价格
-#define EMPTY_VALUE           0      // 空值
+// #define EMPTY_VALUE           0      // 空值 - 与MQL4内置冲突
 
 //--- 点值转换
 #define POINTS_TO_PIPS(point) ((point) * (Digits == 3 || Digits == 5 ? 10 : 1))

@@ -53,7 +53,7 @@ public:
    void           SetSymbol(const string symbol) { m_symbol = symbol; }
    void           SetTimeFrame(int tf) { m_timeFrame = tf; }
    void           SetMagic(int magic) { m_magic = magic; }
-   void           SetParams(const StrategyParams params) { m_params = params; }
+   void           SetParams(StrategyParams &params) { m_params = params; }
 
    //--- 获取方法
    string         GetSymbol() const { return m_symbol; }
